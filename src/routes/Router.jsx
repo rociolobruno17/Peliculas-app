@@ -1,9 +1,26 @@
-import React from 'react'
+import { BrowserRouter, Routes, Route } from "react-router"
 
-function router() {
-  return (
-    <div>router</div>
-  )
+import Header from "../components/Header"
+import Home from "../pages/Home"
+import UltimosLanzamientos from "../pages/UltimosLanzamientos"
+import Populares from "../pages/Populares"
+import Buscar from "../pages/Buscar"
+import Favorites from "../pages/Favorites"
+
+
+function Router() {
+    return (
+        <BrowserRouter>
+            <Header />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/ultimos" element={<UltimosLanzamientos />} />
+                <Route path="/populares" element={<Populares />} />
+                <Route path="/buscar" element={<Buscar />} />
+                <Route path="/favoritos" element={<Favorites />} />
+        </Routes>
+    </BrowserRouter >
+  );
 }
 
-export default router
+export default Router

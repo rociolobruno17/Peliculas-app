@@ -2,7 +2,7 @@ import React from 'react'
 
 function UltimosLanzamientos() {
   return (
-    <div>UltimosLanzamientos</div>
+    <h2>Ultimos Lanzamientos</h2>
   )
 }
 
