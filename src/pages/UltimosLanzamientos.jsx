@@ -1,8 +1,10 @@
 import { useNowPlayingMovies } from "../hooks/useNowPlayingMovies";
 import { Box, Typography, Grid, Card, CardMedia, CardContent, Button } from "@mui/material";
+import { useNavigate } from "react-router";
 
 export default function UltimosLanzamientos() {
   const { NowPlayingMovies, loading, error } = useNowPlayingMovies();
+  const navigate = useNavigate();
 
   if (loading) {
     return <Typography variant="h6" align="center" mt={4}>Cargando películas...</Typography>;
@@ -25,7 +27,10 @@ export default function UltimosLanzamientos() {
       <Grid container spacing={3}>
         {NowPlayingMovies.slice(0, 20).map((movie) => (
           <Grid item xs={12} sm={6} md={3} key={movie.id}>
-            <Card sx={{ height: "100%" }}>
+            <Card
+              sx={{ height: "100%", cursor: "pointer" }}
+              onClick={() => navigate(`/detail/${movie.id}`)}
+            >
               <CardMedia
                 component="img"
                 image={
@@ -42,14 +47,7 @@ export default function UltimosLanzamientos() {
                 </Typography>
               </CardContent>
               <Box sx={{ p: 2, pt: 0 }}>
-                <Button
-                  variant="contained"
-                  fullWidth
-                  onClick={() => {
-                    console.log("Ir a detalles de:", movie.id);
-                    // Más adelante aquí pondremos navigate(`/detalle/${movie.id}`)
-                  }}
-                >
+                <Button variant="contained" fullWidth>
                   Ver detalle
                 </Button>
               </Box>
@@ -58,5 +56,5 @@ export default function UltimosLanzamientos() {
         ))}
       </Grid>
     </Box>
-  );
+  )
 }
