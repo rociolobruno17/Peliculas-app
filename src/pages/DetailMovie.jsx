@@ -4,17 +4,17 @@ import { Box, Typography, CircularProgress } from "@mui/material";
 
 export default function DetailMovie() {
   const { id } = useParams();
-  const { movideDetail, loading, error } = useMovieDetail(id);
+  const { movieDetail, loading, error } = useMovieDetail(id);
 
   if (loading) return <CircularProgress />;
   if (error) return <Typography>{error}</Typography>;
-  if (!movideDetail) return null;
+  if (!movieDetail) return null;
 
   return (
     <Box
       sx={{
         minHeight: "100vh",
-        backgroundImage: `url(https://image.tmdb.org/t/p/original${movideDetail.backdrop_path})`,
+        backgroundImage: `url(https://image.tmdb.org/t/p/original${movieDetail.backdrop_path})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         p: 4,
@@ -24,14 +24,14 @@ export default function DetailMovie() {
     >
       <Box sx={{ display: "flex", flexDirection: "column", maxWidth: "600px", gap: 2 }}>
         <img
-          src={`https://image.tmdb.org/t/p/w500${movideDetail.poster_path}`}
-          alt={movideDetail.title}
+          src={`https://image.tmdb.org/t/p/w500${movieDetail.poster_path}`}
+          alt={movieDetail.title}
           style={{ borderRadius: 8, maxWidth: "100%" }}
         />
-        <Typography variant="h4">{movideDetail.title}</Typography>
-        <Typography variant="body1">{movideDetail.overview}</Typography>
-        <Typography variant="body2">⭐ {movideDetail.vote_average}</Typography>
-        <Typography variant="body2">🎬 Fecha de estreno: {movie.release_date}</Typography>
+        <Typography variant="h4">{movieDetail.title}</Typography>
+        <Typography variant="body1">{movieDetail.overview}</Typography>
+        <Typography variant="body2">⭐ {movieDetail.vote_average}</Typography>
+        <Typography variant="body2">🎬 Fecha de estreno: {movieDetail.release_date}</Typography>
       </Box>
     </Box>
   );
