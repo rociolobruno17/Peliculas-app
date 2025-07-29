@@ -63,9 +63,9 @@ export default function Home() {
       </section>
 
       <section>
-        <h2>🎬 Películas Populares</h2>
+        <h2>🌟 Películas Mejor Puntuadas</h2>
         <div style={gridContainer}>
-          {movies.slice(0, 10).map((movie) => (
+          {topRatedMovies.slice(0, 10).map((movie) => (
             <div key={movie.id} style={movieCardStyle}>
               <img
                 src={`${imgPath}${movie.poster_path}`}
@@ -79,9 +79,9 @@ export default function Home() {
       </section>
 
       <section>
-        <h2>🌟 Películas Mejor Puntuadas</h2>
+        <h2>🎬 Películas Populares</h2>
         <div style={gridContainer}>
-          {topRatedMovies.slice(0, 10).map((movie) => (
+          {movies.slice(0, 10).map((movie) => (
             <div key={movie.id} style={movieCardStyle}>
               <img
                 src={`${imgPath}${movie.poster_path}`}

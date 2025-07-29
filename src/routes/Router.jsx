@@ -6,6 +6,7 @@ import UltimosLanzamientos from "../pages/UltimosLanzamientos"
 import Populares from "../pages/Populares"
 import Buscar from "../pages/Buscar"
 import Favorites from "../pages/Favorites"
+import DetailMovie from "../pages/DetailMovie";
 
 
 function Router() {
@@ -18,9 +19,10 @@ function Router() {
                 <Route path="/populares" element={<Populares />} />
                 <Route path="/buscar" element={<Buscar />} />
                 <Route path="/favoritos" element={<Favorites />} />
-        </Routes>
-    </BrowserRouter >
-  );
+                <Route path="/detail/:id" element={<DetailMovie />} />
+            </Routes>
+        </BrowserRouter >
+    );
 }
 
 export default Router
