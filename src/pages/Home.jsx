@@ -1,11 +1,14 @@
+import { useNavigate } from "react-router";
 import { useTrendingMovies } from "../hooks/useTrendingMovies";
 import { usePopularMovies } from "../hooks/usePopularMovies";
 import { useTopRatedMovies } from "../hooks/useTopRatedMovies";
+
 
 export default function Home() {
   const { trendingMovies, loading } = useTrendingMovies();
   const { movies } = usePopularMovies();
   const { topRatedMovies } = useTopRatedMovies();
+    const navigate = useNavigate();
 
   const imgPath = "https://image.tmdb.org/t/p/w500";
 
@@ -41,7 +44,7 @@ export default function Home() {
         {loading ? (
           <p>Cargando películas...</p>
         ) : (
-          <div style={gridContainer}>
+          <div style={gridContainer} >
             {trendingMovies.map((movie) => (
               <div key={movie.id} style={trendingCardStyle}>
                 <img

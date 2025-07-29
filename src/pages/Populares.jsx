@@ -1,10 +1,12 @@
 // src/pages/Populares.jsx
-import React from "react";
+import { useNavigate } from "react-router";
 import { usePopularMovies } from "../hooks/usePopularMovies";
-import { Box, Typography, Grid, Card, CardMedia, CardContent } from "@mui/material";
+import { Box, Typography, Grid, Card, CardMedia, CardContent, Button } from "@mui/material";
+
 
 export default function Populares() {
   const { movies, loading, error } = usePopularMovies();
+    const navigate = useNavigate();
 
   if (loading) {
     return <Typography variant="h6" align="center" mt={4}>Cargando películas...</Typography>;
@@ -21,13 +23,16 @@ export default function Populares() {
   return (
     <Box sx={{ padding: 4 }}>
       <Typography variant="h4" gutterBottom>
-        Películas Populares
+        Peliculas Populares
       </Typography>
 
       <Grid container spacing={3}>
         {movies.map((movie) => (
           <Grid item xs={12} sm={6} md={3} key={movie.id}>
-            <Card sx={{ height: "100%" }}>
+            <Card
+              sx={{ height: "100%", cursor: "pointer" }}
+              onClick={() => navigate(`/detail/${movie.id}`)}
+            >
               <CardMedia
                 component="img"
                 image={
@@ -38,18 +43,20 @@ export default function Populares() {
                 alt={movie.title}
                 sx={{ height: 350, objectFit: "cover" }}
               />
-              <CardContent>
-                <Typography variant="subtitle1" component="div">
+              <CardContent sx={{ flexGrow: 1 }}>
+                <Typography variant="subtitle1" component="div" gutterBottom>
                   {movie.title}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {movie.release_date}
-                </Typography>
               </CardContent>
+              <Box sx={{ p: 2, pt: 0 }}>
+                <Button variant="contained" fullWidth>
+                  Ver detalle
+                </Button>
+              </Box>
             </Card>
           </Grid>
         ))}
       </Grid>
     </Box>
-  );
+  )
 }
