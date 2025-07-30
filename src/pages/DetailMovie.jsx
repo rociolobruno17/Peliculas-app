@@ -1,13 +1,21 @@
 import { useParams } from "react-router-dom";
+import { useState } from "react";
 import { useMovieDetail } from "../hooks/useMovieDetail";
-import { Box, Typography, CircularProgress } from "@mui/material";
+import { useMovieVideos } from "../hooks/useMovieVideos";
+import { Box, Typography, CircularProgress, Button } from "@mui/material";
 
 export default function DetailMovie() {
   const { id } = useParams();
-  const { movieDetail, loading, error } = useMovieDetail(id);
+  const { movieDetail, loading: loadingDetail, error: errorDetail } = useMovieDetail(id);
+  const { movieVideos, loading: loadingVideos, error: errorVideos } = useMovieVideos(id);
+  const [showTrailer, setShowTrailer] = useState(false);
 
-  if (loading) return <CircularProgress />;
-  if (error) return <Typography>{error}</Typography>;
+  const trailer = movieVideos.find(
+    (video) => video.type === "Trailer" && video.site === "YouTube"
+  );
+
+  if (loadingDetail || loadingVideos) return <CircularProgress />;
+  if (errorDetail || errorVideos) return <Typography>Error al cargar los datos.</Typography>;
   if (!movieDetail) return null;
 
   return (
@@ -32,6 +40,32 @@ export default function DetailMovie() {
         <Typography variant="body1">{movieDetail.overview}</Typography>
         <Typography variant="body2">⭐ {movieDetail.vote_average}</Typography>
         <Typography variant="body2">🎬 Fecha de estreno: {movieDetail.release_date}</Typography>
+
+        {trailer && (
+          <>
+            <Button
+              variant="contained"
+              color="error"
+              onClick={() => setShowTrailer(true)}
+              sx={{ mt: 2, width: "fit-content" }}
+            >
+              ▶ Ver Tráiler
+            </Button>
+
+            {showTrailer && (
+              <Box sx={{ mt: 2 }}>
+                <iframe
+                  width="100%"
+                  height="315"
+                  src={`https://www.youtube.com/embed/${trailer.key}`}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allowFullScreen
+                />
+              </Box>
+            )}
+          </>
+        )}
       </Box>
     </Box>
   );
