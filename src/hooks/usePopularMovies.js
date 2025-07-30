@@ -1,5 +1,5 @@
 // src/hooks/usePopularMovies.js
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import api from '../api/Tmdb';
 
 export function usePopularMovies() {
@@ -7,7 +7,6 @@ export function usePopularMovies() {
   const [loading, setLoading] = useState(true); // para mostrar un loader
   const [error, setError] = useState(null);
 
-  useEffect(() => {
     async function fetchPopularMovies() {
       try {
         const response = await api.get('/movie/popular');
@@ -20,8 +19,5 @@ export function usePopularMovies() {
       }
     }
 
-    fetchPopularMovies();
-  }, []);
-
-  return { popularMovies, loading, error };
+  return { popularMovies, loading, error, fetchPopularMovies };
 }

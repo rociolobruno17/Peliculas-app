@@ -1,17 +1,21 @@
 // src/pages/Populares.jsx
 import { useNavigate } from "react-router";
 import { usePopularMovies } from "../hooks/usePopularMovies";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { FavoriteContext } from "../context/FavoriteContext";
 import { Box, Typography, Grid, Card, CardMedia, CardContent, IconButton } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 export default function Populares() {
-  const { popularMovies, loading, error } = usePopularMovies();
+  const { fetchPopularMovies, popularMovies, loading, error } = usePopularMovies();
   const navigate = useNavigate();
   const { toggleFavorito, esFavorito } = useContext(FavoriteContext);
 
+  useEffect(() => {
+
+    fetchPopularMovies();
+  }, []);
 
   if (loading) {
     return <Typography variant="h6" align="center" mt={4}>Cargando películas...</Typography>;
@@ -30,7 +34,8 @@ export default function Populares() {
       </Typography>
 
       <Grid container spacing={3}>
-        {popularMovies.map((movie) => {
+        {
+        popularMovies.map((movie) => {
           return (
             <Grid item xs={12} sm={6} md={3} key={movie.id}>
               <Card
