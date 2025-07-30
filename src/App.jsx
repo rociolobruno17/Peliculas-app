@@ -1,5 +1,5 @@
 import Router from "./routes/Router"
-import FavoriteContextProvider from "./context/FavoriteContext"
+import { FavoriteContextProvider } from './context/FavoriteContext'
 import CssBaseline from '@mui/material/CssBaseline';
 
 function App() {
