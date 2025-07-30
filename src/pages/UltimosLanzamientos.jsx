@@ -46,11 +46,6 @@ export default function UltimosLanzamientos() {
                   {movie.title}
                 </Typography>
               </CardContent>
-              <Box sx={{ p: 2, pt: 0 }}>
-                <Button variant="contained" fullWidth>
-                  Ver detalle
-                </Button>
-              </Box>
             </Card>
           </Grid>
         ))}

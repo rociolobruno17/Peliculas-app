@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import api from '../api/Tmdb';
 
 export function usePopularMovies() {
-  const [movies, setMovies] = useState([]);
+  const [popularMovies, setPopularMovies] = useState([]);
   const [loading, setLoading] = useState(true); // para mostrar un loader
   const [error, setError] = useState(null);
 
@@ -11,7 +11,7 @@ export function usePopularMovies() {
     async function fetchPopularMovies() {
       try {
         const response = await api.get('/movie/popular');
-        setMovies(response.data.results);
+        setPopularMovies(response.data.results);
       } catch (err) {
         setError('Error al cargar las películas');
         console.error(err);
@@ -23,5 +23,5 @@ export function usePopularMovies() {
     fetchPopularMovies();
   }, []);
 
-  return { movies, loading, error };
+  return { popularMovies, loading, error };
 }

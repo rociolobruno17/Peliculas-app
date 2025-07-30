@@ -1,11 +1,11 @@
 // src/pages/Populares.jsx
 import { useNavigate } from "react-router";
 import { usePopularMovies } from "../hooks/usePopularMovies";
-import { Box, Typography, Grid, Card, CardMedia, CardContent, Button } from "@mui/material";
+import { Box, Typography, Grid, Card, CardMedia, CardContent } from "@mui/material";
 
 
 export default function Populares() {
-  const { movies, loading, error } = usePopularMovies();
+  const { popularMovies, loading, error } = usePopularMovies();
     const navigate = useNavigate();
 
   if (loading) {
@@ -27,7 +27,7 @@ export default function Populares() {
       </Typography>
 
       <Grid container spacing={3}>
-        {movies.map((movie) => (
+        {popularMovies.map((movie) => (
           <Grid item xs={12} sm={6} md={3} key={movie.id}>
             <Card
               sx={{ height: "100%", cursor: "pointer" }}
@@ -48,11 +48,6 @@ export default function Populares() {
                   {movie.title}
                 </Typography>
               </CardContent>
-              <Box sx={{ p: 2, pt: 0 }}>
-                <Button variant="contained" fullWidth>
-                  Ver detalle
-                </Button>
-              </Box>
             </Card>
           </Grid>
         ))}

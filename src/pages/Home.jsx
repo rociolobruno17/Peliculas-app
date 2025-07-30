@@ -1,101 +1,140 @@
+// src/pages/Home.jsx
 import { useNavigate } from "react-router";
 import { useTrendingMovies } from "../hooks/useTrendingMovies";
 import { usePopularMovies } from "../hooks/usePopularMovies";
 import { useTopRatedMovies } from "../hooks/useTopRatedMovies";
-
+import {
+  Box,
+  Typography,
+  Grid,
+  Card,
+  CardMedia,
+  CardContent,
+} from "@mui/material";
 
 export default function Home() {
   const { trendingMovies, loading } = useTrendingMovies();
-  const { movies } = usePopularMovies();
+  const { popularMovies } = usePopularMovies();
   const { topRatedMovies } = useTopRatedMovies();
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const imgPath = "https://image.tmdb.org/t/p/w500";
 
-  const gridContainer = {
-    display: "flex",
-    flexWrap: "wrap",
-    gap: "2rem",
-    justifyContent: "center",
-    padding: "1rem 0",
-  };
-
-  const trendingCardStyle = {
-    width: "300px",
-    backgroundColor: "#f0f0f0",
-    borderRadius: "10px",
-    padding: "1rem",
-  };
-
-  const posterStyle = {
-    width: "100%",
-    borderRadius: "8px",
-  };
-
-  const movieCardStyle = {
-    width: "200px",
-    textAlign: "center",
-  };
-
   return (
-    <div>
+    <Box sx={{ padding: 4 }}>
+      {/* 🔥 Películas en Tendencia */}
       <section>
-        <h2>🔥 Películas en Tendencia</h2>
+        <Typography variant="h4" gutterBottom>
+          🔥 Películas en Tendencia
+        </Typography>
         {loading ? (
-          <p>Cargando películas...</p>
+          <Typography variant="h6" align="center" mt={4}>
+            Cargando películas...
+          </Typography>
         ) : (
-          <div style={gridContainer} >
-            {trendingMovies.map((movie) => (
-              <div key={movie.id} style={trendingCardStyle}>
-                <img
-                  src={`${imgPath}${movie.poster_path}`}
-                  alt={movie.title}
-                  style={posterStyle}
-                />
-                <h3>{movie.title}</h3>
-                <p><strong>⭐ {movie.vote_average}</strong></p>
-                <p>
-                  {movie.overview.length > 150
-                    ? movie.overview.slice(0, 150) + "..."
-                    : movie.overview}
-                </p>
-              </div>
+          <Grid container spacing={3}>
+            {trendingMovies.slice(0, 5).map((movie) => (
+              <Grid item xs={12} sm={6} md={4} key={movie.id}>
+                <Card
+                  sx={{
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => navigate(`/detail/${movie.id}`)}
+                >
+                  <CardMedia
+                    component="img"
+                    image={
+                      movie.poster_path
+                        ? `${imgPath}${movie.poster_path}`
+                        : "https://via.placeholder.com/500x750?text=Sin+Imagen"
+                    }
+                    alt={movie.title}
+                    sx={{ height: 350, objectFit: "cover" }}
+                  />
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography variant="subtitle1" gutterBottom>
+                      {movie.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" gutterBottom>
+                      ⭐ {movie.vote_average}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {movie.overview.length > 150
+                        ? movie.overview.slice(0, 150) + "..."
+                        : movie.overview}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
             ))}
-          </div>
+          </Grid>
         )}
       </section>
 
+      {/* 🌟 Películas Mejor Puntuadas */}
       <section>
-        <h2>🌟 Películas Mejor Puntuadas</h2>
-        <div style={gridContainer}>
+        <Typography variant="h4" gutterBottom mt={6}>
+          🌟 Películas Mejor Puntuadas
+        </Typography>
+        <Grid container spacing={3}>
           {topRatedMovies.slice(0, 10).map((movie) => (
-            <div key={movie.id} style={movieCardStyle}>
-              <img
-                src={`${imgPath}${movie.poster_path}`}
-                alt={movie.title}
-                width={200}
-              />
-              <p>{movie.title}</p>
-            </div>
+            <Grid item xs={12} sm={6} md={3} key={movie.id}>
+              <Card
+                sx={{ height: "100%", cursor: "pointer" }}
+                onClick={() => navigate(`/detail/${movie.id}`)}
+              >
+                <CardMedia
+                  component="img"
+                  image={
+                    movie.poster_path
+                      ? `${imgPath}${movie.poster_path}`
+                      : "https://via.placeholder.com/500x750?text=Sin+Imagen"
+                  }
+                  alt={movie.title}
+                  sx={{ height: 350, objectFit: "cover" }}
+                />
+                <CardContent>
+                  <Typography variant="subtitle1">{movie.title}</Typography>
+                </CardContent>
+              </Card>
+            </Grid>
           ))}
-        </div>
+        </Grid>
       </section>
 
+      {/* 🎬 Películas Populares */}
       <section>
-        <h2>🎬 Películas Populares</h2>
-        <div style={gridContainer}>
-          {movies.slice(0, 10).map((movie) => (
-            <div key={movie.id} style={movieCardStyle}>
-              <img
-                src={`${imgPath}${movie.poster_path}`}
-                alt={movie.title}
-                width={200}
-              />
-              <p>{movie.title}</p>
-            </div>
+        <Typography variant="h4" gutterBottom mt={6}>
+          🎬 Películas Populares
+        </Typography>
+        <Grid container spacing={3}>
+          {popularMovies.slice(0, 10).map((movie) => (
+            <Grid item xs={12} sm={6} md={3} key={movie.id}>
+              <Card
+                sx={{ height: "100%", cursor: "pointer" }}
+                onClick={() => navigate(`/detail/${movie.id}`)}
+              >
+                <CardMedia
+                  component="img"
+                  image={
+                    movie.poster_path
+                      ? `${imgPath}${movie.poster_path}`
+                      : "https://via.placeholder.com/500x750?text=Sin+Imagen"
+                  }
+                  alt={movie.title}
+                  sx={{ height: 350, objectFit: "cover" }}
+                />
+                <CardContent>
+                  <Typography variant="subtitle1">{movie.title}</Typography>
+                </CardContent>
+              </Card>
+            </Grid>
           ))}
-        </div>
+        </Grid>
       </section>
-    </div>
+    </Box>
   );
 }
