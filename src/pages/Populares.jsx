@@ -3,19 +3,11 @@ import { useNavigate } from "react-router";
 import { usePopularMovies } from "../hooks/usePopularMovies";
 import { useContext } from "react";
 import { FavoriteContext } from "../context/FavoriteContext";
-import {
-  Box,
-  Typography,
-  Grid,
-  Card,
-  CardMedia,
-  CardContent,
-  IconButton
-} from "@mui/material";
+import { Box, Typography, Grid, Card, CardMedia, CardContent, IconButton } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
-export default function Populares({ id, title, image }) {
+export default function Populares() {
   const { popularMovies, loading, error } = usePopularMovies();
   const navigate = useNavigate();
   const { toggleFavorito, esFavorito } = useContext(FavoriteContext);
@@ -23,9 +15,7 @@ export default function Populares({ id, title, image }) {
 
   if (loading) {
     return <Typography variant="h6" align="center" mt={4}>Cargando películas...</Typography>;
-  }
-
-  if (error) {
+  } if (error) {
     return (
       <Typography variant="h6" align="center" color="error" mt={4}>
         {error}
