@@ -1,32 +1,31 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useMovie } from "../hooks/useMovie"; // ✅ nuevo hook unificado
-import { useMovieVideos } from "../hooks/useMovieVideos";
+import { useMovie } from "../hooks/useMovie";
 import { Box, Typography, CircularProgress, Button } from "@mui/material";
 
 export default function DetailMovie() {
   const { id } = useParams();
-
-  const { movieVideos, loading: loadingVideos, error: errorVideos } = useMovieVideos(id);
   const [showTrailer, setShowTrailer] = useState(false);
 
-  const trailer = movieVideos.find(
-    (video) => video.type === "Trailer" && video.site === "YouTube"
-  );
-
-
-  // 👉 Usamos el mismo hook con diferentes instancias
   const {
     movieDetail,
+    videos,
     loading,
+    loadingVideos,
     error,
-    fetchMovieDetail
+    errorVideos,
+    fetchMovieDetail,
+    fetchVideos
   } = useMovie();
 
   useEffect(() => {
-    fetchMovieDetail(id); // ✅ Acá sí
+    fetchMovieDetail(id);
+    fetchVideos(id);
   }, [id]);
 
+  const trailer = videos.find(
+    (video) => video.type === "Trailer" && video.site === "YouTube"
+  );
 
   if (loading || loadingVideos) return <CircularProgress />;
   if (error || errorVideos) return <Typography>Error al cargar los datos.</Typography>;
