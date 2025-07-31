@@ -3,22 +3,37 @@ import { useState } from 'react';
 import api from '../api/Tmdb';
 
 export function useMovie() {
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+    const [movies, setMovies] = useState([]);
+    const [movieDetail, setMovieDetail] = useState(null);
 
-  async function fetchMovies(type) {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    async function fetchMovies(type) {
+        setLoading(true);
+        try {
+            const response = await api.get(`/movie/${type}`);
+            setMovies(response.data.results);
+        } catch (err) {
+            setError("Error al cargar películas");
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+
+async function fetchMovieDetail(id) {
     setLoading(true);
     try {
-      const response = await api.get(`/movie/${type}`);
-      setMovies(response.data.results);
+        const response = await api.get(`/movie/${id}`);
+        setMovieDetail(response.data);
     } catch (err) {
-      setError("Error al cargar películas");
-      console.error(err);
+        setError("No se pudo cargar la película.");
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
-  }
+}
 
-  return { movies, loading, error, fetchMovies };
+  return {  loading, error, movies, fetchMovies, movieDetail, fetchMovieDetail };
 }
