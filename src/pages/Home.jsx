@@ -1,6 +1,6 @@
 // src/pages/Home.jsx
 import { useNavigate } from "react-router";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { FavoriteContext } from "../context/FavoriteContext";
 import { useTrendingMovies } from "../hooks/useTrendingMovies";
 import { usePopularMovies } from "../hooks/usePopularMovies";
@@ -11,10 +11,15 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 export default function Home() {
   const { trendingMovies, loading } = useTrendingMovies();
-  const { popularMovies } = usePopularMovies();
+  const { popularMovies, fetchPopularMovies } = usePopularMovies();
   const { topRatedMovies } = useTopRatedMovies();
   const navigate = useNavigate();
   const { toggleFavorito, esFavorito } = useContext(FavoriteContext);
+
+    useEffect(() => {
+  
+      fetchPopularMovies();
+    }, []);
 
   const imgPath = "https://image.tmdb.org/t/p/w500";
 

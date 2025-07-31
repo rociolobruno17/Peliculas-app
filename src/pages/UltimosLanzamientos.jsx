@@ -1,15 +1,20 @@
 import { useNowPlayingMovies } from "../hooks/useNowPlayingMovies";
 import { useNavigate } from "react-router";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { FavoriteContext } from "../context/FavoriteContext";
 import { Box, Typography, Grid, Card, CardMedia, CardContent, IconButton } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 export default function UltimosLanzamientos() {
-  const { NowPlayingMovies, loading, error } = useNowPlayingMovies();
+  const { fetchNowPlayingMovies, NowPlayingMovies, loading, error } = useNowPlayingMovies();
   const navigate = useNavigate();
   const { toggleFavorito, esFavorito } = useContext(FavoriteContext);
+
+  useEffect(() => {
+    fetchNowPlayingMovies();
+  }, []);
+
 
   if (loading) {
     return <Typography variant="h6" align="center" mt={4}>Cargando películas...</Typography>;
