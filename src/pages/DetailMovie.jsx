@@ -1,18 +1,25 @@
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMovieDetail } from "../hooks/useMovieDetail";
 import { useMovieVideos } from "../hooks/useMovieVideos";
 import { Box, Typography, CircularProgress, Button } from "@mui/material";
 
 export default function DetailMovie() {
   const { id } = useParams();
-  const { movieDetail, loading: loadingDetail, error: errorDetail } = useMovieDetail(id);
+  const { movieDetail, loading: loadingDetail, error: errorDetail, fetchMovieDetail } = useMovieDetail(id);
   const { movieVideos, loading: loadingVideos, error: errorVideos } = useMovieVideos(id);
   const [showTrailer, setShowTrailer] = useState(false);
 
   const trailer = movieVideos.find(
     (video) => video.type === "Trailer" && video.site === "YouTube"
   );
+
+    useEffect(() => {
+    fetchMovieDetail();
+  }, [id]);
+
+  
+  
 
   if (loadingDetail || loadingVideos) return <CircularProgress />;
   if (errorDetail || errorVideos) return <Typography>Error al cargar los datos.</Typography>;

@@ -6,7 +6,6 @@ export function useTrendingMovies() {
   const [loading, setLoading] = useState(true); // para mostrar un loader
   const [error, setError] = useState(null);
 
-  useEffect(() => {
     async function fetchTrendingMovies() {
       try {
         const response = await api.get('/trending/movie/week');
@@ -20,8 +19,5 @@ export function useTrendingMovies() {
       }
     };
 
-    fetchTrendingMovies();
-  }, []);
-
-  return { trendingMovies, loading, error };
+  return { trendingMovies, loading, error, fetchTrendingMovies };
 }

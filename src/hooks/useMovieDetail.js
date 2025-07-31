@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import api from "../api/Tmdb";
 
 export function useMovieDetail(id) {
@@ -6,7 +6,6 @@ export function useMovieDetail(id) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
     async function fetchMovieDetail() {
       try {
         const response = await api.get(`/movie/${id}`);
@@ -18,8 +17,6 @@ export function useMovieDetail(id) {
       }
     }
 
-    fetchMovieDetail();
-  }, [id]);
 
-  return { movieDetail, loading, error };
+  return { movieDetail, loading, error, fetchMovieDetail };
 }

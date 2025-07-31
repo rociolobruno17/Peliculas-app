@@ -10,14 +10,21 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 export default function Home() {
-  const { trendingMovies, loading } = useTrendingMovies();
+  const { trendingMovies, loading, fetchTrendingMovies } = useTrendingMovies();
   const { popularMovies, fetchPopularMovies } = usePopularMovies();
-  const { topRatedMovies } = useTopRatedMovies();
+  const { topRatedMovies, fetchTopRatedMovies } = useTopRatedMovies();
   const navigate = useNavigate();
   const { toggleFavorito, esFavorito } = useContext(FavoriteContext);
 
     useEffect(() => {
-  
+    fetchTrendingMovies();
+  }, []);
+
+    useEffect(() => {
+    fetchTopRatedMovies();
+  }, []);
+
+    useEffect(() => {
       fetchPopularMovies();
     }, []);
 

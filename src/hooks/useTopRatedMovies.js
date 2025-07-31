@@ -6,7 +6,6 @@ export function useTopRatedMovies() {
   const [loading, setLoading] = useState(true); // para mostrar un loader
   const [error, setError] = useState(null);
 
-  useEffect(() => {
     async function fetchTopRatedMovies() {
       try {
         const response = await api.get('/movie/top_rated');
@@ -19,8 +18,6 @@ export function useTopRatedMovies() {
       }
     }
 
-    fetchTopRatedMovies();
-  }, []);
 
-  return { topRatedMovies, loading, error };
+  return { topRatedMovies, loading, error, fetchTopRatedMovies };
 }

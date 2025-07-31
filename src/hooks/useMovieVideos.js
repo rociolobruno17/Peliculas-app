@@ -19,7 +19,6 @@ export function useMovieVideos(movieId) {
                 setLoading(false);
             }
         }
-
         if (movieId) fetchMovieVideos();
     }, [movieId]);
 
