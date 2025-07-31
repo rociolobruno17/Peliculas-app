@@ -1,4 +1,4 @@
-import { useNowPlayingMovies } from "../hooks/useNowPlayingMovies";
+import { useMovie } from "../hooks/useMovie"; // ✅ nuevo hook unificado
 import { useNavigate } from "react-router";
 import { useContext, useEffect } from "react";
 import { FavoriteContext } from "../context/FavoriteContext";
@@ -7,34 +7,39 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 export default function UltimosLanzamientos() {
-  const { fetchNowPlayingMovies, NowPlayingMovies, loading, error } = useNowPlayingMovies();
   const navigate = useNavigate();
   const { toggleFavorito, esFavorito } = useContext(FavoriteContext);
 
-  useEffect(() => {
-    fetchNowPlayingMovies();
-  }, []);
 
+    // 👉 Usamos el mismo hook con diferentes instancias
+  const {
+    movies: nowPlayingMovies,
+    loading,
+    error,
+    fetchMovies: fetchNowPlayingMovies
+  } = useMovie();
 
-  if (loading) {
-    return <Typography variant="h6" align="center" mt={4}>Cargando películas...</Typography>;
-  } if (error) {
-    return (
-      <Typography variant="h6" align="center" color="error" mt={4}>
-        {error}
-      </Typography>
-    );
-  }
+useEffect(() => {
+  fetchNowPlayingMovies("now_playing");
+}, []);
 
   return (
     <Box sx={{ padding: 4 }}>
       <Typography variant="h4" gutterBottom>
-        Ultimos Lanzamientos
+        Ultimos lanzamientos
       </Typography>
 
       <Grid container spacing={3}>
-        {NowPlayingMovies.map((movie) => {
-          return (
+        {loading ? (
+          <Typography variant="h6" align="center" mt={4} sx={{ width: '100%' }}>
+            Cargando películas...
+          </Typography>
+        ) : error ? (
+          <Typography variant="h6" align="center" color="error" mt={4} sx={{ width: '100%' }}>
+            {error}
+          </Typography>
+        ) : (
+          nowPlayingMovies.map((movie) => (
             <Grid item xs={12} sm={6} md={3} key={movie.id}>
               <Card
                 sx={{ height: "100%", cursor: "pointer", position: "relative" }}
@@ -78,8 +83,8 @@ export default function UltimosLanzamientos() {
                 </Box>
               </Card>
             </Grid>
-          );
-        })}
+          ))
+        )}
       </Grid>
     </Box>
   );
