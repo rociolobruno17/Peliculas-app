@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { useMovie } from "../hooks/useMovie"; // ✅ nuevo hook unificado
 import { useContext, useEffect } from "react";
 import { FavoriteContext } from "../context/FavoriteContext";
-import { Box, Typography, Grid, Card, CardMedia, CardContent, IconButton } from "@mui/material";
+import { Box, Typography, Grid, Card, CardMedia, CardContent, IconButton, Stack, Pagination } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
@@ -16,12 +16,21 @@ export default function Populares() {
     movies: popularMovies,
     loading,
     error,
-    fetchMovies: fetchPopularMovies
+    fetchMovies: fetchPopularMovies,
+    pagina,
+    totalPaginas,
+    paginaAnterior,
+    paginaSiguiente,
+    setPagina
   } = useMovie();
 
   useEffect(() => {
-    fetchPopularMovies("popular");
-  }, []);
+    fetchPopularMovies('popular', pagina);
+  }, [pagina]);
+
+  const handleChange = (event, value) => {
+    setPagina(value); // cuando clickean en un número
+  };
 
 
   return (
@@ -87,6 +96,16 @@ export default function Populares() {
           ))
         )}
       </Grid>
+      
+      <Stack spacing={2} alignItems="center" mt={4}>
+        <Pagination
+          count={totalPaginas > 500 ? 500 : totalPaginas} // TMDB no permite más de 500 páginas
+          page={pagina}
+          onChange={handleChange}
+          color="primary"
+        />
+      </Stack>
+
     </Box>
   );
 }

@@ -2,7 +2,7 @@ import { useMovie } from "../hooks/useMovie"; // ✅ nuevo hook unificado
 import { useNavigate } from "react-router";
 import { useContext, useEffect } from "react";
 import { FavoriteContext } from "../context/FavoriteContext";
-import { Box, Typography, Grid, Card, CardMedia, CardContent, IconButton } from "@mui/material";
+import { Box, Typography, Grid, Card, CardMedia, CardContent, IconButton, Stack, Pagination } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
@@ -11,17 +11,26 @@ export default function UltimosLanzamientos() {
   const { toggleFavorito, esFavorito } = useContext(FavoriteContext);
 
 
-    // 👉 Usamos el mismo hook con diferentes instancias
+  // 👉 Usamos el mismo hook con diferentes instancias
   const {
     movies: nowPlayingMovies,
     loading,
     error,
-    fetchMovies: fetchNowPlayingMovies
+    fetchMovies: fetchNowPlayingMovies,
+    pagina,
+    totalPaginas,
+    paginaAnterior,
+    paginaSiguiente,
+    setPagina
   } = useMovie();
 
-useEffect(() => {
-  fetchNowPlayingMovies("now_playing");
-}, []);
+  useEffect(() => {
+    fetchNowPlayingMovies('now_playing', pagina); // Cada vez que cambia la página, pedimos nuevos datos
+  }, [pagina]);
+
+  const handleChange = (event, value) => {
+    setPagina(value); // cuando clickean en un número
+  };
 
   return (
     <Box sx={{ padding: 4 }}>
@@ -86,6 +95,15 @@ useEffect(() => {
           ))
         )}
       </Grid>
+
+      <Stack spacing={2} alignItems="center" mt={4}>
+        <Pagination
+          count={totalPaginas > 500 ? 500 : totalPaginas} // TMDB no permite más de 500 páginas
+          page={pagina}
+          onChange={handleChange}
+          color="primary"
+        />
+      </Stack>
     </Box>
   );
 }

@@ -10,22 +10,35 @@ export function useMovie() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    const [pagina, setPagina] = useState(1);
+    const [totalPaginas, setTotalPaginas] = useState(1);
+
     const [loadingVideos, setLoadingVideos] = useState(false);
     const [errorVideos, setErrorVideos] = useState(null);
 
 
 
-    async function fetchMovies(type) {
+    async function fetchMovies(type, page = 1) {
         setLoading(true);
         try {
-            const response = await api.get(`/movie/${type}`);
+            const response = await api.get(`/movie/${type}`, {
+                params: { page }
+            });
             setMovies(response.data.results);
+            setTotalPaginas(response.data.total_pages); // <-- actualizar total de páginas
         } catch (err) {
             setError("Error al cargar detalles de la película");
             console.error(err);
         } finally {
             setLoading(false);
         }
+    }
+
+    function paginaAnterior() {
+        if (pagina > 1) setPagina(pagina - 1)
+    }
+    function paginaSiguiente() {
+        if (pagina < totalPaginas) setPagina(pagina + 1)
     }
 
 
@@ -54,5 +67,5 @@ export function useMovie() {
         }
     }
 
-    return { movies, movieDetail, videos, loading, loadingVideos, error, errorVideos, fetchMovies, fetchMovieDetail, fetchVideos };
+    return { movies, movieDetail, videos, loading, loadingVideos, error, errorVideos, pagina, totalPaginas, setPagina, paginaAnterior, paginaSiguiente, fetchMovies, fetchMovieDetail, fetchVideos };
 }
