@@ -62,7 +62,7 @@ export default function Hero() {
                                 sx={{
                                     position: "relative",
                                     width: "100vw",
-                                    height: "90vh",
+                                    height: "100vh",
                                     overflow: "hidden",
                                     cursor: "pointer"
                                 }}

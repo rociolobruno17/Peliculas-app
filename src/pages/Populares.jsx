@@ -34,10 +34,7 @@ export default function Populares() {
 
 
   return (
-    <Box sx={{ padding: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        Películas Populares
-      </Typography>
+    <Box sx={{ padding: 4, pt:12 }}>
 
       <Grid container spacing={3}>
         {loading ? (

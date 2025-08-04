@@ -9,11 +9,7 @@ function Favorites() {
   const navigate = useNavigate();
 
   return (
-    <div>
-      <Typography variant="h4" sx={{ my: 4, textAlign: "center" }}>
-        Mis Favoritos ⭐️
-      </Typography>
-
+    <Box sx={{ padding: 4, pt:12 }}>
       {favoritos.length === 0 ? (
         <Typography variant="body1" sx={{ textAlign: "center" }}>
           Aún no agregaste películas a tu lista de favoritos
@@ -53,7 +49,7 @@ function Favorites() {
           ))}
         </Grid>
       )}
-    </div>
+    </Box>
   );
 }
 

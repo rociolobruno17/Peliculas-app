@@ -23,7 +23,7 @@ function Buscar() {
   const navigate = useNavigate();
 
   return (
-    <Box sx={{ padding: 4 }}>
+    <Box sx={{ padding: 4, pt:12 }}>
       <Typography variant="h4" gutterBottom>
         Buscar Películas
       </Typography>

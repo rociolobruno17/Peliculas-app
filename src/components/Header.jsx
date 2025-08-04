@@ -31,7 +31,7 @@ export default function Header() {
   const menuItems = [
     { label: "Populares", path: "/populares" },
     { label: "Últimos Lanzamientos", path: "/ultimos" },
-    { label: "Mis favoritos", path: "/favoritos" },
+    { label: "Favoritos", path: "/favoritos" },
     { label: "Buscar", path: "/buscar" },
   ];
 
@@ -42,7 +42,29 @@ export default function Header() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ backgroundColor: "black", color: "white" }}>
+      <AppBar
+        position="fixed"
+        sx={{
+          backgroundColor: "transparent",
+          boxShadow: "none",
+          width: "100%",
+          top: 0,
+          left: 0,
+          zIndex: 1300, // MUI recomienda 1100+ para overlays
+        }}
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: "linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0))",
+            zIndex: 1,
+            pointerEvents: "none",
+          }}
+        />
         <Toolbar>
           <Typography
             variant="h6"
