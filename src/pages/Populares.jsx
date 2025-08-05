@@ -38,7 +38,11 @@ export default function Populares() {
   return (
     <Box sx={{ padding: 0 }}>
 
-      <Hero movies={popularMovies} loading={loading} />
+      <Hero
+        movies={popularMovies}
+        loading={loading}
+        subtitulo="Lo más visto del momento. Dale play a lo que todos están hablando."
+      />
       <Grid container spacing={3}>
         {loading ? (
           <Typography variant="h6" align="center" mt={4} sx={{ width: '100%' }}>

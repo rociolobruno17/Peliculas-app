@@ -20,7 +20,7 @@ export default function UltimosLanzamientos() {
   } = useMovie();
 
   useEffect(() => {
-    fetchNowPlayingMovies('now_playing', pagina);
+    fetchNowPlayingMovies('upcoming', pagina);
   }, [pagina]);
 
   const handleChange = (event, value) => {
@@ -30,7 +30,10 @@ export default function UltimosLanzamientos() {
   return (
     <Box sx={{ padding: 0 }}>
 
-      <Hero movies={nowPlayingMovies} loading={loading} />
+      <Hero movies={nowPlayingMovies}
+      loading={loading}
+      subtitulo="Próximos estrenos para agendar."
+      />
 
       <Grid container spacing={3}>
         {loading ? (

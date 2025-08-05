@@ -1,4 +1,5 @@
 // src/pages/Home.jsx
+import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
@@ -43,64 +44,90 @@ export default function Home() {
     fetchPopular("popular");
   }, []);
 
-  const imgPath = "https://image.tmdb.org/t/p/w500";
-
-  const responsiveFull = {
-    all: {
-      breakpoint: { max: 4000, min: 0 },
+  const responsiveCards = {
+    superLargeDesktop: {
+      breakpoint: { max: 4000, min: 1536 },
+      items: 6,
+    },
+    desktop: {
+      breakpoint: { max: 1536, min: 1200 },
+      items: 5,
+    },
+    laptop: {
+      breakpoint: { max: 1200, min: 900 },
+      items: 4,
+    },
+    tablet: {
+      breakpoint: { max: 900, min: 600 },
+      items: 2,
+    },
+    mobile: {
+      breakpoint: { max: 600, min: 0 },
       items: 1,
-      slidesToSlide: 1
-    }
+    },
   };
 
   return (
     <Box sx={{ padding: 0 }}>
       {/* 🔥 Películas en Tendencia */}
-      <Hero movies={trendingMovies} loading={loading} />
+      <Hero movies={trendingMovies}
+        loading={loading}
+        subtitulo="Películas en cartelera. ¿Qué se estrena esta semana?"
+      />
 
-      {/* 🌟 Películas Mejor Puntuadas */}
       <section>
-        <Typography variant="h4" gutterBottom mt={6}>
-          🌟 Películas Mejor Puntuadas
+        <Typography variant="h5" gutterBottom mt={6}>
+         Películas Mejor Puntuadas
         </Typography>
 
-        <Grid container spacing={3}>
-          {topRatedMovies.slice(0, 10).map((movie) => {
-            return (
-
-              <Grid item xs={12} sm={6} md={3} key={movie.id}>
-                <MovieCard
-                  movie={movie}
-                  esFavorito={esFavorito}
-                  toggleFavorito={toggleFavorito}
-                />
-              </Grid>
-            )
-          }
-          )}
-        </Grid>
+        <Carousel
+          responsive={responsiveCards}
+          infinite={false}
+          arrows
+          draggable
+          swipeable
+          keyBoardControl
+          itemClass="carousel-item-padding-40-px"
+          containerClass="carousel-container"
+        >
+          {topRatedMovies.slice(0, 10).map((movie) => (
+            <Box key={movie.id} sx={{ px: 1 }}>
+              <MovieCard
+                movie={movie}
+                esFavorito={esFavorito}
+                toggleFavorito={toggleFavorito}
+              />
+            </Box>
+          ))}
+        </Carousel>
       </section>
 
       {/* 🎬 Películas Populares */}
       <section>
-        <Typography variant="h4" gutterBottom mt={6}>
-          🎬 Películas Populares
+        <Typography variant="h5" gutterBottom mt={6}>
+        Películas Populares
         </Typography>
 
-        <Grid container spacing={3}>
-          {popularMovies.slice(0, 10).map((movie) => {
-            return (
-              <Grid item xs={12} sm={6} md={3} key={movie.id}>
-                <MovieCard
-                  movie={movie}
-                  esFavorito={esFavorito}
-                  toggleFavorito={toggleFavorito}
-                />
-              </Grid>
-            )
-          }
-          )}
-        </Grid>
+        <Carousel
+          responsive={responsiveCards}
+          infinite={false}
+          arrows
+          draggable
+          swipeable
+          keyBoardControl
+          itemClass="carousel-item-padding-40-px"
+          containerClass="carousel-container"
+        >
+          {popularMovies.slice(0, 10).map((movie) => (
+            <Box key={movie.id} sx={{ px: 1 }}>
+              <MovieCard
+                movie={movie}
+                esFavorito={esFavorito}
+                toggleFavorito={toggleFavorito}
+              />
+            </Box>
+          ))}
+        </Carousel>
       </section>
     </Box >
   );

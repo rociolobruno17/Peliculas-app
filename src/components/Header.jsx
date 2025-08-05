@@ -2,7 +2,6 @@ import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -11,6 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import Logo from "../assets/Logo.svg";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -45,35 +45,30 @@ export default function Header() {
       <AppBar
         position="fixed"
         sx={{
-          backgroundColor: "transparent",
+          backgroundColor: "rgba(0, 0, 0, 0.4)",  // negro translúcido
+          backdropFilter: "blur(10px)",
+          WebkitBackdropFilter: "blur(10px)",
+          borderBottom: "1px solid rgba(255, 255, 255, 0.1)",  // 🧊 bisel blanco
           boxShadow: "none",
           width: "100%",
           top: 0,
           left: 0,
-          zIndex: 1300, // MUI recomienda 1100+ para overlays
+          zIndex: 1300,
         }}
       >
-        {/* <Box
-          sx={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            background: "linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0))",
-            zIndex: 1,
-            pointerEvents: "none",
-          }}
-        /> */}
         <Toolbar>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, cursor: "pointer" }}
+          <Box
+            component="img"
+            src={Logo} // ✅ Usa la importación
+            alt="Fílmico"
+            sx={{
+              height: 20,
+              mr: 2,
+              cursor: "pointer",
+            }}
             onClick={() => navigate("/")}
-          >
-            Peliculas
-          </Typography>
+          />
+
 
           {isMobile ? (
             <>
@@ -102,7 +97,11 @@ export default function Header() {
             </>
           ) : (
             menuItems.map(({ label, path }) => (
-              <Button key={label} color="inherit" onClick={() => navigate(path)}>
+              <Button
+                key={label}
+                variant="header"  // <--- aquí aplicas el variant especial para header
+                onClick={() => navigate(path)}
+              >
                 {label}
               </Button>
             ))
