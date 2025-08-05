@@ -1,17 +1,22 @@
 // src/pages/Populares.jsx
 import { useNavigate } from "react-router";
-import { useMovie } from "../hooks/useMovie"; // ✅ nuevo hook unificado
+import { useMovie } from "../hooks/useMovie";
 import { useContext, useEffect } from "react";
 import { FavoriteContext } from "../context/FavoriteContext";
-import { Box, Typography, Grid, Card, CardMedia, CardContent, IconButton, Stack, Pagination } from "@mui/material";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import {
+  Box,
+  Typography,
+  Grid,
+  Stack,
+  Pagination
+} from "@mui/material";
+import MovieCard from "../components/MovieCard"; // 👉 Importamos tu componente nuevo
+import Hero from "../components/Hero";
 
 export default function Populares() {
   const navigate = useNavigate();
   const { toggleFavorito, esFavorito } = useContext(FavoriteContext);
 
-  // 👉 Usamos el mismo hook con diferentes instancias
   const {
     movies: popularMovies,
     loading,
@@ -19,8 +24,6 @@ export default function Populares() {
     fetchMovies: fetchPopularMovies,
     pagina,
     totalPaginas,
-    paginaAnterior,
-    paginaSiguiente,
     setPagina
   } = useMovie();
 
@@ -29,13 +32,13 @@ export default function Populares() {
   }, [pagina]);
 
   const handleChange = (event, value) => {
-    setPagina(value); // cuando clickean en un número
+    setPagina(value);
   };
 
-
   return (
-    <Box sx={{ padding: 4, pt:12 }}>
+    <Box sx={{ padding: 0 }}>
 
+      <Hero movies={popularMovies} loading={loading} />
       <Grid container spacing={3}>
         {loading ? (
           <Typography variant="h6" align="center" mt={4} sx={{ width: '100%' }}>
@@ -48,61 +51,24 @@ export default function Populares() {
         ) : (
           popularMovies.map((movie) => (
             <Grid item xs={12} sm={6} md={3} key={movie.id}>
-              <Card
-                sx={{ height: "100%", cursor: "pointer", position: "relative" }}
-                onClick={() => navigate(`/detail/${movie.id}`)}
-              >
-                <CardMedia
-                  component="img"
-                  image={
-                    movie.poster_path
-                      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                      : "https://via.placeholder.com/500x750?text=Sin+Imagen"
-                  }
-                  alt={movie.title}
-                  sx={{ height: 350, objectFit: "cover" }}
-                />
-                <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography variant="subtitle1" component="div" gutterBottom>
-                    {movie.title}
-                  </Typography>
-                </CardContent>
-
-                <Box sx={{ position: "absolute", top: 8, right: 8 }}>
-                  <IconButton
-                    onClick={(e) => {
-                      e.stopPropagation(); // ⚠️ evita que se dispare el onClick del Card
-                      toggleFavorito({
-                        id: movie.id,
-                        title: movie.title,
-                        image: movie.poster_path
-                          ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                          : "https://via.placeholder.com/500x750?text=Sin+Imagen"
-                      });
-                    }}
-                    aria-label="Agregar a favoritos"
-                  >
-                    {esFavorito(movie.id)
-                      ? <FavoriteIcon color="error" />
-                      : <FavoriteBorderIcon sx={{ color: "white" }} />}
-                  </IconButton>
-
-                </Box>
-              </Card>
+              <MovieCard
+                movie={movie}
+                esFavorito={esFavorito}
+                toggleFavorito={toggleFavorito}
+              />
             </Grid>
           ))
         )}
       </Grid>
-      
+
       <Stack spacing={2} alignItems="center" mt={4}>
         <Pagination
-          count={totalPaginas > 500 ? 500 : totalPaginas} // TMDB no permite más de 500 páginas
+          count={totalPaginas > 500 ? 500 : totalPaginas}
           page={pagina}
           onChange={handleChange}
           color="primary"
         />
       </Stack>
-
     </Box>
   );
 }

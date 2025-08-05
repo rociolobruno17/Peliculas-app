@@ -53,7 +53,7 @@ export default function Header() {
           zIndex: 1300, // MUI recomienda 1100+ para overlays
         }}
       >
-        <Box
+        {/* <Box
           sx={{
             position: "absolute",
             top: 0,
@@ -64,7 +64,7 @@ export default function Header() {
             zIndex: 1,
             pointerEvents: "none",
           }}
-        />
+        /> */}
         <Toolbar>
           <Typography
             variant="h6"

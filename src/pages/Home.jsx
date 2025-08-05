@@ -1,29 +1,31 @@
 // src/pages/Home.jsx
-import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import Hero from "../components/Hero";
+import MovieCard from "../components/MovieCard";
 import { useContext } from "react";
 import { FavoriteContext } from "../context/FavoriteContext";
 import { useMovie } from "../hooks/useMovie"; // ✅ nuevo hook unificado
 import {
   Box,
   Typography,
-  Grid,
-  Card,
-  CardMedia,
-  CardContent,
-  IconButton
+  Grid
 } from "@mui/material";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 export default function Home() {
   const navigate = useNavigate();
   const { toggleFavorito, esFavorito } = useContext(FavoriteContext);
 
   // 👉 Usamos el mismo hook con diferentes instancias
+
+  const {
+    movies: trendingMovies,
+    loading,
+    fetchMovies: fetchTrending
+  } = useMovie();
+
+
   const {
     movies: topRatedMovies,
     fetchMovies: fetchTopRated
@@ -36,6 +38,7 @@ export default function Home() {
 
   // 🔄 Fetchs individuales por tipo
   useEffect(() => {
+    fetchTrending("now_playing");
     fetchTopRated("top_rated");
     fetchPopular("popular");
   }, []);
@@ -53,7 +56,7 @@ export default function Home() {
   return (
     <Box sx={{ padding: 0 }}>
       {/* 🔥 Películas en Tendencia */}
-          <Hero />
+      <Hero movies={trendingMovies} loading={loading} />
 
       {/* 🌟 Películas Mejor Puntuadas */}
       <section>
@@ -64,51 +67,17 @@ export default function Home() {
         <Grid container spacing={3}>
           {topRatedMovies.slice(0, 10).map((movie) => {
             return (
+
               <Grid item xs={12} sm={6} md={3} key={movie.id}>
-                <Card
-                  sx={{ height: "100%", cursor: "pointer", position: "relative" }}
-                  onClick={() => navigate(`/detail/${movie.id}`)}
-                >
-                  <CardMedia
-                    component="img"
-                    image={
-                      movie.poster_path
-                        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                        : "https://via.placeholder.com/500x750?text=Sin+Imagen"
-                    }
-                    alt={movie.title}
-                    sx={{ height: 350, objectFit: "cover" }}
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography variant="subtitle1" component="div" gutterBottom>
-                      {movie.title}
-                    </Typography>
-                  </CardContent>
-
-                  <Box sx={{ position: "absolute", top: 8, right: 8 }}>
-                    <IconButton
-                      onClick={(e) => {
-                        e.stopPropagation(); // ⚠️ evita que se dispare el onClick del Card
-                        toggleFavorito({
-                          id: movie.id,
-                          title: movie.title,
-                          image: movie.poster_path
-                            ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                            : "https://via.placeholder.com/500x750?text=Sin+Imagen"
-                        });
-                      }}
-                      aria-label="Agregar a favoritos"
-                    >
-                      {esFavorito(movie.id)
-                        ? <FavoriteIcon color="error" />
-                        : <FavoriteBorderIcon sx={{ color: "white" }} />}
-                    </IconButton>
-
-                  </Box>
-                </Card>
+                <MovieCard
+                  movie={movie}
+                  esFavorito={esFavorito}
+                  toggleFavorito={toggleFavorito}
+                />
               </Grid>
-            );
-          })}
+            )
+          }
+          )}
         </Grid>
       </section>
 
@@ -122,52 +91,17 @@ export default function Home() {
           {popularMovies.slice(0, 10).map((movie) => {
             return (
               <Grid item xs={12} sm={6} md={3} key={movie.id}>
-                <Card
-                  sx={{ height: "100%", cursor: "pointer", position: "relative" }}
-                  onClick={() => navigate(`/detail/${movie.id}`)}
-                >
-                  <CardMedia
-                    component="img"
-                    image={
-                      movie.poster_path
-                        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                        : "https://via.placeholder.com/500x750?text=Sin+Imagen"
-                    }
-                    alt={movie.title}
-                    sx={{ height: 350, objectFit: "cover" }}
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography variant="subtitle1" component="div" gutterBottom>
-                      {movie.title}
-                    </Typography>
-                  </CardContent>
-
-                  <Box sx={{ position: "absolute", top: 8, right: 8 }}>
-                    <IconButton
-                      onClick={(e) => {
-                        e.stopPropagation(); // ⚠️ evita que se dispare el onClick del Card
-                        toggleFavorito({
-                          id: movie.id,
-                          title: movie.title,
-                          image: movie.poster_path
-                            ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                            : "https://via.placeholder.com/500x750?text=Sin+Imagen"
-                        });
-                      }}
-                      aria-label="Agregar a favoritos"
-                    >
-                      {esFavorito(movie.id)
-                        ? <FavoriteIcon color="error" />
-                        : <FavoriteBorderIcon sx={{ color: "white" }} />}
-                    </IconButton>
-
-                  </Box>
-                </Card>
+                <MovieCard
+                  movie={movie}
+                  esFavorito={esFavorito}
+                  toggleFavorito={toggleFavorito}
+                />
               </Grid>
-            );
-          })}
+            )
+          }
+          )}
         </Grid>
       </section>
-    </Box>
+    </Box >
   );
 }
