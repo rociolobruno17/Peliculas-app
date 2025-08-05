@@ -65,8 +65,8 @@ export default function Hero({ movies = [], loading, subtitulo = "" }) {
                                         bottom: 0,
                                         left: 0,
                                         width: "100%",
-                                        height: "100%",
-                                        background: "linear-gradient(to top, rgba(0,0,0,0.9), transparent)",
+                                        height: "30%", // menos altura para que sea solo la base
+                                        background: "linear-gradient(to top, rgba(0,0,0,1), transparent)",
                                         color: "white",
                                         display: "flex",
                                         flexDirection: "column",
@@ -75,6 +75,7 @@ export default function Hero({ movies = [], loading, subtitulo = "" }) {
                                         pb: 6,
                                     }}
                                 >
+
                                     {/* 🆕 Subtítulo personalizado */}
                                     {subtitulo && (
                                         <Typography
