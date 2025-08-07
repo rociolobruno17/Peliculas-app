@@ -56,28 +56,30 @@ export default function Header() {
           zIndex: 1300,
         }}
       >
-        <Toolbar>
+
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          {/* Logo siempre a la izquierda */}
           <Box
             component="img"
-            src={Logo} // ✅ Usa la importación
+            src={Logo}
             alt="Fílmico"
             sx={{
               height: 20,
-              mr: 2,
               cursor: "pointer",
             }}
             onClick={() => navigate("/")}
           />
 
-
+          {/* Menú en mobile */}
           {isMobile ? (
             <>
               <IconButton
                 size="large"
-                edge="start"
+                edge="end" // 👈 importante para alinearlo a la derecha
                 color="inherit"
                 aria-label="menu"
                 onClick={handleMenuOpen}
+                sx={{ marginLeft: "auto" }} // 👈 esto lo empuja a la derecha
               >
                 <MenuIcon />
               </IconButton>
@@ -96,17 +98,22 @@ export default function Header() {
               </Menu>
             </>
           ) : (
-            menuItems.map(({ label, path }) => (
-              <Button
-                key={label}
-                variant="header"  // <--- aquí aplicas el variant especial para header
-                onClick={() => navigate(path)}
-              >
-                {label}
-              </Button>
-            ))
+            // Menú en desktop
+            <Box>
+              {menuItems.map(({ label, path }) => (
+                <Button
+                  key={label}
+                  variant="header"
+                  onClick={() => navigate(path)}
+                >
+                  {label}
+                </Button>
+              ))}
+            </Box>
           )}
         </Toolbar>
+
+
       </AppBar>
     </Box>
   );

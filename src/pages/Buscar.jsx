@@ -16,6 +16,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useContext } from "react";
 import { FavoriteContext } from "../context/FavoriteContext";
 
+
 function Buscar() {
   const [query, setQuery] = useState("");
   const { results, loading, error } = useSearchMovies(query);

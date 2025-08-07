@@ -72,7 +72,7 @@ export default function Home() {
       {/* 🔥 Películas en Tendencia */}
       <Hero movies={trendingMovies}
         loading={loading}
-        subtitulo="Películas en cartelera. ¿Qué se estrena esta semana?"
+        subtitulo="¿Qué se estrena esta semana?"
       />
 
       <section>

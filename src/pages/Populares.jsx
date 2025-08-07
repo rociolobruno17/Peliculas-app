@@ -43,7 +43,7 @@ export default function Populares() {
         loading={loading}
         subtitulo="Lo más visto del momento. Dale play a lo que todos están hablando."
       />
-      <Grid container spacing={3}>
+      <Grid container spacing={2} padding={6} >
         {loading ? (
           <Typography variant="h6" align="center" mt={4} sx={{ width: '100%' }}>
             Cargando películas...

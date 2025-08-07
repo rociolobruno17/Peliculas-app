@@ -35,7 +35,7 @@ export default function UltimosLanzamientos() {
       subtitulo="Próximos estrenos para agendar."
       />
 
-      <Grid container spacing={3}>
+      <Grid container spacing={2} padding={6} >
         {loading ? (
           <Typography variant="h6" align="center" mt={4} sx={{ width: '100%' }}>
             Cargando películas...

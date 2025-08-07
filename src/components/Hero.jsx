@@ -42,7 +42,11 @@ export default function Hero({ movies = [], loading, subtitulo = "" }) {
                                 sx={{
                                     position: "relative",
                                     width: "100vw",
-                                    height: "100vh",
+                                    height: {
+                                        xs: "75vh",   // 🔽 Mobile: más corto
+                                        sm: "85vh",   // 🔽 Tablets
+                                        md: "100vh",  // 🔽 Desktop
+                                    },
                                     overflow: "hidden",
                                     cursor: "pointer",
                                 }}
@@ -93,9 +97,7 @@ export default function Hero({ movies = [], loading, subtitulo = "" }) {
                                     <Typography variant="h4" fontWeight="bold">
                                         {movie.title}
                                     </Typography>
-                                    <Typography variant="body1" maxWidth="600px" mt={1} mb={2}>
-                                        {movie.overview || "Sin descripción disponible."}
-                                    </Typography>
+
                                     <Box sx={{ display: "flex", justifyContent: "flex-start", width: "fit-content" }}>
                                         <Button
                                             onClick={(e) => {

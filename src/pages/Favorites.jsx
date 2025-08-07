@@ -5,7 +5,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useNavigate } from "react-router-dom";
 
 function Favorites() {
-  const { favoritos, toggleFavorito, esFavorito } = useContext(FavoriteContext);
+  const { favoritos, toggleFavorito } = useContext(FavoriteContext);
   const navigate = useNavigate();
 
   return (
@@ -54,3 +54,4 @@ function Favorites() {
 }
 
 export default Favorites;
+

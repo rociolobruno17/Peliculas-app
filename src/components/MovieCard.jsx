@@ -10,11 +10,8 @@ const MovieCard = ({ movie, esFavorito, toggleFavorito }) => {
 
   const imageUrl = movie.poster_path
     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-    : "https://via.placeholder.com/500x750?text=Sin+Imagen";
+    : "https://via.placeholder.com/500x750?text=No+Image";
 
-  const genreLabel = movie.genre_ids?.[0] === 18 ? "Drama"
-                    : movie.genre_ids?.[0] === 10749 ? "Amor"
-                    : "Película";
 
   return (
     <Card
@@ -36,32 +33,40 @@ const MovieCard = ({ movie, esFavorito, toggleFavorito }) => {
         sx={{ height: 350, objectFit: "cover" }}
       />
 
-      {/* Overlay al hacer hover */}
+      {/* Overlay con fade */}
       <Box
         sx={{
           position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: "40%",
-          background: "linear-gradient(to top, rgba(0,0,0,0.8), transparent)",
-          color: "white",
+          inset: 0,
+          background: "linear-gradient(to top, rgba(0,0,0,0.9), transparent)",
+          color: "#fff",
           opacity: 0,
-          transition: "opacity 0.3s ease-in-out",
+          transition: "opacity 0.1s ease",
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-end",
-          p: 2,
-          '&:hover': {
-            opacity: 1
-          }
+          padding: 2,
+          "&:hover": {
+            opacity: 8,
+          },
         }}
       >
-        <Typography variant="caption" sx={{ mb: 1 }}>
-          {genreLabel}
+        <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+          {movie.title}
         </Typography>
-        <Typography variant="body2" sx={{ mb: 1 }} noWrap>
-          {movie.overview}
+
+        <Typography
+          variant="body2"
+          sx={{
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            mt: 0.5,
+          }}
+        >
+          {movie.overview || "Sin descripción disponible."}
         </Typography>
         <Box sx={{ position: "absolute", top: 8, right: 8 }}>
           <IconButton
