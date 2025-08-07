@@ -16,7 +16,7 @@ export default function Footer() {
         borderTop: "1px solid rgba(255, 255, 255, 0.1)",
       }}
     >
-      <Typography variant="body2">
+      <Typography variant="body3">
         © {new Date().getFullYear()} Fílmico — Todos los derechos reservados.
       </Typography>
 

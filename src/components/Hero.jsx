@@ -59,6 +59,7 @@ export default function Hero({ movies = [], loading, subtitulo = "" }) {
                                         width: "100%",
                                         height: "100%",
                                         objectFit: "cover",
+                                        objectPosition: "center center", // 👈 Asegura que siempre esté centrada
                                     }}
                                 />
 
