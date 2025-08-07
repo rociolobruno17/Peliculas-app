@@ -30,8 +30,8 @@ export default function Hero({ movies = [], loading, subtitulo = "" }) {
                         draggable
                         infinite
                         keyBoardControl
-                        autoPlay={false}
-                        showDots={false}
+                        autoPlay={true}
+                        showDots={true}
                         arrows
                         containerClass="carousel-container"
                         itemClass="carousel-fullscreen-item"
