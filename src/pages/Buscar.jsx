@@ -22,6 +22,7 @@ function Buscar() {
   const { results, loading, error } = useSearchMovies(query);
   const { toggleFavorito, esFavorito } = useContext(FavoriteContext);
   const navigate = useNavigate();
+  
 
   return (
     <Box sx={{ padding: 4, pt:12 }}>

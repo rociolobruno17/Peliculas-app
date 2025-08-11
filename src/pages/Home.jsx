@@ -76,7 +76,7 @@ export default function Home() {
       />
 
       <section>
-        <Typography variant="h5" gutterBottom mt={6}>
+        <Typography variant="h6" gutterBottom mt={2} ml={4}>
          Películas Mejor Puntuadas
         </Typography>
 
@@ -104,7 +104,7 @@ export default function Home() {
 
       {/* 🎬 Películas Populares */}
       <section>
-        <Typography variant="h5" gutterBottom mt={6}>
+        <Typography variant="h6" gutterBottom mt={6} ml={4}>
         Películas Populares
         </Typography>
 

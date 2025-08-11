@@ -43,9 +43,9 @@ export default function Hero({ movies = [], loading, subtitulo = "" }) {
                                     position: "relative",
                                     width: "100vw",
                                     height: {
-                                        xs: "75vh",   // 🔽 Mobile: más corto
-                                        sm: "85vh",   // 🔽 Tablets
-                                        md: "100vh",  // 🔽 Desktop
+                                        xs: "70vh",   // 🔽 Mobile: más corto
+                                        sm: "80vh",   // 🔽 Tablets
+                                        md: "80vh",  // 🔽 Desktop
                                     },
                                     overflow: "hidden",
                                     cursor: "pointer",
