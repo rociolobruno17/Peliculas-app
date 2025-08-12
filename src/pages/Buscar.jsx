@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useSearchMovies } from "../hooks/useSearchMovies";
 import { useNavigate } from "react-router-dom";
 import {
@@ -13,19 +13,26 @@ import {
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { useContext } from "react";
 import { FavoriteContext } from "../context/FavoriteContext";
 
 
 function Buscar() {
   const [query, setQuery] = useState("");
-  const { results, loading, error } = useSearchMovies(query);
+  const { results, loading, error, searchMovies } = useSearchMovies();
   const { toggleFavorito, esFavorito } = useContext(FavoriteContext);
   const navigate = useNavigate();
-  
+
+  // Aquí controlamos cuándo buscar
+  useEffect(() => {
+    const delayDebounce = setTimeout(() => {
+      searchMovies(query);
+    }, 500); // 500ms para evitar llamadas en cada letra
+
+    return () => clearTimeout(delayDebounce);
+  }, [query]);
 
   return (
-    <Box sx={{ padding: 4, pt:12 }}>
+    <Box sx={{ padding: 4, pt: 12 }}>
       <Typography variant="h4" gutterBottom>
         Buscar Películas
       </Typography>

@@ -7,6 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
@@ -20,19 +21,14 @@ export default function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  const handleMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
+  const handleMenuOpen = (event) => setAnchorEl(event.currentTarget);
+  const handleMenuClose = () => setAnchorEl(null);
 
-  // Quité "Inicio"
   const menuItems = [
     { label: "Populares", path: "/populares" },
     { label: "Últimos Lanzamientos", path: "/ultimos" },
-    { label: "Favoritos", path: "/favoritos" },
-    { label: "Buscar", path: "/buscar" },
+    { label: "Favoritos", path: "/favoritos" }
+    // Quitamos "Buscar"
   ];
 
   const handleNavigate = (path) => {
@@ -45,10 +41,10 @@ export default function Header() {
       <AppBar
         position="fixed"
         sx={{
-          backgroundColor: "rgba(0, 0, 0, 0.4)",  // negro translúcido
+          backgroundColor: "rgba(0, 0, 0, 0.4)",
           backdropFilter: "blur(10px)",
           WebkitBackdropFilter: "blur(10px)",
-          borderBottom: "1px solid rgba(255, 255, 255, 0.1)",  // 🧊 bisel blanco
+          borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
           boxShadow: "none",
           width: "100%",
           top: 0,
@@ -56,30 +52,25 @@ export default function Header() {
           zIndex: 1300,
         }}
       >
-
         <Toolbar sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          {/* Logo siempre a la izquierda */}
+          {/* Logo */}
           <Box
             component="img"
             src={Logo}
             alt="Fílmico"
-            sx={{
-              height: 20,
-              cursor: "pointer",
-            }}
+            sx={{ height: 20, cursor: "pointer" }}
             onClick={() => navigate("/")}
           />
 
-          {/* Menú en mobile */}
           {isMobile ? (
             <>
               <IconButton
                 size="large"
-                edge="end" // 👈 importante para alinearlo a la derecha
+                edge="end"
                 color="inherit"
                 aria-label="menu"
                 onClick={handleMenuOpen}
-                sx={{ marginLeft: "auto" }} // 👈 esto lo empuja a la derecha
+                sx={{ marginLeft: "auto" }}
               >
                 <MenuIcon />
               </IconButton>
@@ -95,11 +86,14 @@ export default function Header() {
                     {label}
                   </MenuItem>
                 ))}
+                {/* Lupa en menú mobile */}
+                <MenuItem onClick={() => handleNavigate("/buscar")}>
+                  <SearchIcon sx={{ mr: 1 }} /> Buscar
+                </MenuItem>
               </Menu>
             </>
           ) : (
-            // Menú en desktop
-            <Box>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
               {menuItems.map(({ label, path }) => (
                 <Button
                   key={label}
@@ -109,11 +103,14 @@ export default function Header() {
                   {label}
                 </Button>
               ))}
+
+              {/* Lupa en menú desktop */}
+              <IconButton color="inherit" onClick={() => navigate("/buscar")}>
+                <SearchIcon />
+              </IconButton>
             </Box>
           )}
         </Toolbar>
-
-
       </AppBar>
     </Box>
   );
