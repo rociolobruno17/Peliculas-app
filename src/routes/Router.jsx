@@ -11,6 +11,8 @@ import DetailMovie from "../pages/DetailMovie";
 
 import Layout from "../components/Layout";
 
+import Error404 from "../components/Error404";
+
 
 function Router() {
     return (
@@ -23,6 +25,7 @@ function Router() {
                     <Route path="/buscar" element={<Buscar />} />
                     <Route path="/favoritos" element={<Favorites />} />
                     <Route path="/detail/:id" element={<DetailMovie />} />
+                    <Route path="*" element={<Error404 />} />
                 </Routes>
             </Layout>
         </BrowserRouter >
