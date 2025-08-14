@@ -14,6 +14,8 @@ import {
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { FavoriteContext } from "../context/FavoriteContext";
+import Error404 from "../components/Error404";
+import Logo3d from "../assets/Logo3d.png";
 
 
 function Buscar() {
@@ -26,7 +28,7 @@ function Buscar() {
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
       searchMovies(query);
-    }, 500); // 500ms para evitar llamadas en cada letra
+    });
 
     return () => clearTimeout(delayDebounce);
   }, [query]);
@@ -55,11 +57,27 @@ function Buscar() {
           <Typography variant="h6" align="center" color="error" mt={4} sx={{ width: "100%" }}>
             {error}
           </Typography>
-        ) : results.length === 0 && query ? (
-          <Typography variant="h6" align="center" mt={4} sx={{ width: "100%" }}>
-            No se encontraron resultados para: "{query}"
-          </Typography>
+
+        ) : results.length === 0 && query.trim() ? (
+          <Error404
+            fullScreen={false}
+            eyebrow="SIN RESULTADOS"
+            title="No encontramos esa película"
+            message={`No encontramos la película “${query}”, ¿probamos con otra? o explorá lo popular.`}
+            image={Logo3d}
+            imageSx={{ width: 220 }}
+            primaryAction={{
+              label: "Ver Populares",
+              onClick: () => navigate("/populares"),
+            }}
+            secondaryAction={{
+              label: "Limpiar búsqueda",
+              onClick: () => setQuery(""),
+            }}
+          />
+
         ) : (
+
           results.map((movie) => (
             <Grid item xs={12} sm={6} md={3} key={movie.id}>
               <Card
