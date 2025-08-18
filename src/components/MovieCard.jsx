@@ -75,7 +75,8 @@ const MovieCard = ({ movie, esFavorito, toggleFavorito }) => {
               toggleFavorito({
                 id: movie.id,
                 title: movie.title,
-                image: imageUrl
+                image: imageUrl,
+                overview: movie.overview
               });
             }}
             aria-label="Agregar a favoritos"

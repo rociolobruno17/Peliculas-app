@@ -35,18 +35,26 @@ function Buscar() {
 
   return (
     <Box sx={{ padding: 4, pt: 12 }}>
-      <Typography variant="h4" gutterBottom>
-        Buscar Películas
-      </Typography>
+
 
       <TextField
-        fullWidth
-        label="Buscar..."
+        label="Buscar por título, colección, tema..."
         variant="outlined"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        sx={{ mb: 4 }}
+        sx={{
+          position: "sticky",
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "60%",
+          maxWidth: "500px",
+          backgroundColor: "#0D0D1A",
+          borderRadius: "8px",
+          mb: 4,
+          zIndex: 10,             // suficiente para estar arriba del grid, pero no romper layout
+        }}
       />
+
 
       <Grid container spacing={3}>
         {loading ? (
@@ -80,9 +88,18 @@ function Buscar() {
 
           results.map((movie) => (
             <Grid item xs={12} sm={6} md={3} key={movie.id}>
+              
               <Card
-                sx={{ height: "100%", cursor: "pointer", position: "relative" }}
                 onClick={() => navigate(`/detail/${movie.id}`)}
+                sx={{
+                  cursor: "pointer",
+                  position: "relative",
+                  overflow: "hidden",
+                  transition: "transform 0.3s ease-in-out",
+                  '&:hover': {
+                    transform: "scale(1.05)",
+                  }
+                }}
               >
                 <CardMedia
                   component="img"
@@ -94,30 +111,63 @@ function Buscar() {
                   alt={movie.title}
                   sx={{ height: 350, objectFit: "cover" }}
                 />
-                <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography variant="subtitle1" component="div" gutterBottom>
+
+                {/* Overlay con fade */}
+                <Box
+                  sx={{
+                    position: "absolute",
+                    inset: 0,
+                    background: "linear-gradient(to top, rgba(0,0,0,0.9), transparent)",
+                    color: "#fff",
+                    opacity: 0,
+                    transition: "opacity 0.1s ease",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "flex-end",
+                    padding: 2,
+                    "&:hover": {
+                      opacity: 8,
+                    },
+                  }}
+                >
+                  <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                     {movie.title}
                   </Typography>
-                </CardContent>
 
-                <Box sx={{ position: "absolute", top: 8, right: 8 }}>
-                  <IconButton
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleFavorito({
-                        id: movie.id,
-                        title: movie.title,
-                        image: movie.poster_path
-                          ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                          : "https://via.placeholder.com/500x750?text=Sin+Imagen"
-                      });
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      display: "-webkit-box",
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: "vertical",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      mt: 0.5,
                     }}
-                    aria-label="Agregar a favoritos"
                   >
-                    {esFavorito(movie.id)
-                      ? <FavoriteIcon color="error" />
-                      : <FavoriteBorderIcon sx={{ color: "white" }} />}
-                  </IconButton>
+                    {movie.overview || "Sin descripción disponible."}
+                  </Typography>
+
+
+                  <Box sx={{ position: "absolute", top: 8, right: 8 }}>
+                    <IconButton
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleFavorito({
+                          id: movie.id,
+                          title: movie.title,
+                          image: movie.poster_path
+                            ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                            : "https://via.placeholder.com/500x750?text=Sin+Imagen"
+                        });
+                      }}
+                      aria-label="Agregar a favoritos"
+                    >
+                      {esFavorito(movie.id)
+                        ? <FavoriteIcon color="error" />
+                        : <FavoriteBorderIcon sx={{ color: "white" }} />}
+                    </IconButton>
+                  </Box>
                 </Box>
               </Card>
             </Grid>
