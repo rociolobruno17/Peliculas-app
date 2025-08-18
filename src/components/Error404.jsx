@@ -34,7 +34,7 @@ export default function Error404({
       {/* Eyebrow */}
       {eyebrow && (
         <Typography
-          variant="h1"
+          variant="h2"
           sx={{
             position: "absolute",
             top: fullScreen ? "20%" : 24,
@@ -66,12 +66,12 @@ export default function Error404({
       <Typography variant="h6" sx={{ mt: 3, fontWeight: "bold", zIndex: 1 }}>
         {title}
       </Typography>
-      <Typography variant="body1" sx={{ mb: 3, opacity: 0.9, zIndex: 1 }}>
+      <Typography variant="body2" sx={{ mb: 3, opacity: 0.9, zIndex: 1 }}>
         {message}
       </Typography>
 
       {/* Acciones */}
-      <Box sx={{ display: "flex", gap: 2, zIndex: 1 }}>
+      <Box sx={{ display: "flex", gap: 1, zIndex: 1 }}>
         {primaryAction && (
           <Button
             variant="contained"

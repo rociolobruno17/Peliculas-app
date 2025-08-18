@@ -35,28 +35,20 @@ function Buscar() {
 
   return (
     <Box sx={{ padding: 4, pt: 12 }}>
-
+      <Typography variant="h5" gutterBottom>
+        Buscar Películas
+      </Typography>
 
       <TextField
+        fullWidth
         label="Buscar por título, colección, tema..."
         variant="outlined"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        sx={{
-          position: "sticky",
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "60%",
-          maxWidth: "500px",
-          backgroundColor: "#0D0D1A",
-          borderRadius: "8px",
-          mb: 4,
-          zIndex: 10,             // suficiente para estar arriba del grid, pero no romper layout
-        }}
+        sx={{ mb: 4 }}
       />
 
-
-      <Grid container spacing={3}>
+      <Grid container spacing={3} justifyContent={"center"} >
         {loading ? (
           <Typography variant="h6" align="center" mt={4} sx={{ width: "100%" }}>
             Buscando películas...
@@ -69,7 +61,6 @@ function Buscar() {
         ) : results.length === 0 && query.trim() ? (
           <Error404
             fullScreen={false}
-            eyebrow="SIN RESULTADOS"
             title="No encontramos esa película"
             message={`No encontramos la película “${query}”, ¿probamos con otra? o explorá lo popular.`}
             image={Logo3d}
@@ -87,8 +78,7 @@ function Buscar() {
         ) : (
 
           results.map((movie) => (
-            <Grid item xs={12} sm={6} md={3} key={movie.id}>
-              
+            <Grid item xs={12} sm={6} md={3} key={movie.id} >
               <Card
                 onClick={() => navigate(`/detail/${movie.id}`)}
                 sx={{

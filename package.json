@@ -19,6 +19,7 @@
     "framer-motion": "^12.23.12",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-loading-indicators": "^1.0.1",
     "react-multi-carousel": "^2.8.6",
     "react-router-dom": "^7.7.1",
     "sweetalert2": "^11.22.3",
