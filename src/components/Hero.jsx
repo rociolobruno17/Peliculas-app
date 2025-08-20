@@ -1,7 +1,7 @@
 // src/components/Hero.jsx
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, CircularProgress  } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import { useNavigate } from "react-router";
 
@@ -20,9 +20,17 @@ export default function Hero({ movies = [], loading, subtitulo = "" }) {
         <Box sx={{ padding: 0 }}>
             <section>
                 {loading ? (
-                    <Typography variant="h6" align="center" mt={4}>
-                        Cargando películas...
-                    </Typography>
+                    <Box
+                        sx={{
+                            height: "70vh", // ocupa espacio como si fuera el hero
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            bgcolor: "black", // 👈 para que quede igual al splash
+                        }}
+                    >
+                        <CircularProgress size={60} thickness={4} sx={{ color: "#02FFA1" }} />
+                    </Box>
                 ) : (
                     <Carousel
                         responsive={responsiveFull}
