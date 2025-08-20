@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
-import { motion } from "framer-motion"; // 👈 importamos framer-motion
+import { motion } from "framer-motion";
 import Logo from "../assets/Logo.svg";
 
 export default function SplashScreen() {
@@ -10,7 +10,7 @@ export default function SplashScreen() {
     useEffect(() => {
         const timer = setTimeout(() => {
             navigate("/home");
-        }, 3000); // ⏳ 3 segundos en total (dura la animación)
+        }, 3000);
         return () => clearTimeout(timer);
     }, [navigate]);
 
@@ -33,21 +33,21 @@ export default function SplashScreen() {
                 src={Logo}
                 alt="Fílmico"
                 sx={{
-                    height: {
-                        xs: "50px", // móvil
-                        sm: "70px", // tablet
-                        md: "100px", // desktop
+                    width: {
+                        xs: "150px", // móvil
+                        sm: "200px", // tablet
+                        md: "250px", // desktop
                     },
-                    width: "auto",
+                    height: "auto",
                 }}
                 initial={{ scale: 0.5, opacity: 0 }}
                 animate={{
-                    scale: [0.5, 1, 1.5], // pequeño → normal → grande
-                    opacity: [0, 1, 0],   // aparece y luego se desvanece
+                    scale: [0.5, 1, 1.5],
+                    opacity: [0, 1, 0],
                 }}
                 transition={{
-                    duration: 3,          // duración total
-                    times: [0, 0.3, 1],   // control de etapas (30% crecer, 70% desvanecer)
+                    duration: 3,
+                    times: [0, 0.3, 1],
                     ease: "easeInOut",
                 }}
             />
