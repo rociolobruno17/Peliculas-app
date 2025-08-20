@@ -1,7 +1,7 @@
 // src/components/Hero.jsx
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { Box, Typography, Button, CircularProgress  } from "@mui/material";
+import { Box, Typography, Button, CircularProgress } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import { useNavigate } from "react-router";
 
@@ -29,7 +29,11 @@ export default function Hero({ movies = [], loading, subtitulo = "" }) {
                             bgcolor: "black", // 👈 para que quede igual al splash
                         }}
                     >
-                        <CircularProgress size={60} thickness={4} sx={{ color: "#02FFA1" }} />
+                        <CircularProgress
+                            size={60}
+                            thickness={4}
+                            sx={{ color: 'primary.main' }} // 👈 usa el color principal del theme
+                        />
                     </Box>
                 ) : (
                     <Carousel

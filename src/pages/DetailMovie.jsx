@@ -31,8 +31,20 @@ export default function DetailMovie() {
 
   if (loading || loadingVideos) {
     return (
-      <Box sx={{ display: "flex", justifyContent: "center", mt: 10 }}>
-        <CircularProgress color="error" />
+      <Box
+        sx={{
+          height: "70vh", // ocupa espacio como si fuera el hero
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          bgcolor: "black", // 👈 para que quede igual al splash
+        }}
+      >
+        <CircularProgress
+          size={60}
+          thickness={4}
+          sx={{ color: 'primary.main' }} // 👈 usa el color principal del theme
+        />
       </Box>
     );
   }
@@ -164,7 +176,7 @@ export default function DetailMovie() {
               <>
                 <Button
                   variant="contained"
-                  color="error"
+                  color="primary" // 👈 usa el color del theme
                   onClick={handleShowTrailer}
                   sx={{
                     mt: 2,
