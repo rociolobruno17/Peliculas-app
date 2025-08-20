@@ -7,7 +7,6 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
@@ -27,8 +26,8 @@ export default function Header() {
   const menuItems = [
     { label: "Populares", path: "/populares" },
     { label: "Últimos Lanzamientos", path: "/ultimos" },
-    { label: "Favoritos", path: "/favoritos" }
-    // Quitamos "Buscar"
+    { label: "Favoritos", path: "/favoritos" },
+    { label: "Buscar", path: "/buscar" }
   ];
 
   const handleNavigate = (path) => {
@@ -59,7 +58,7 @@ export default function Header() {
             src={Logo}
             alt="Fílmico"
             sx={{ height: 20, cursor: "pointer" }}
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/home")}
           />
 
           {isMobile ? (
@@ -70,7 +69,6 @@ export default function Header() {
                 color="inherit"
                 aria-label="menu"
                 onClick={handleMenuOpen}
-                sx={{ marginLeft: "auto" }}
               >
                 <MenuIcon />
               </IconButton>
@@ -86,10 +84,6 @@ export default function Header() {
                     {label}
                   </MenuItem>
                 ))}
-                {/* Lupa en menú mobile */}
-                <MenuItem onClick={() => handleNavigate("/buscar")}>
-                  <SearchIcon sx={{ mr: 1 }} /> Buscar
-                </MenuItem>
               </Menu>
             </>
           ) : (
@@ -99,15 +93,11 @@ export default function Header() {
                   key={label}
                   variant="header"
                   onClick={() => navigate(path)}
+                  sx={{ color: "white", textTransform: "none" }}
                 >
                   {label}
                 </Button>
               ))}
-
-              {/* Lupa en menú desktop */}
-              <IconButton color="inherit" onClick={() => navigate("/buscar")}>
-                <SearchIcon />
-              </IconButton>
             </Box>
           )}
         </Toolbar>

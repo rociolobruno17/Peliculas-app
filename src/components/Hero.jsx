@@ -125,7 +125,7 @@ export default function Hero({ movies = [], loading, subtitulo = "" }) {
                                                 px: 3,
                                                 py: 1,
                                                 fontWeight: "bold",
-                                                backgroundColor: "#00c853",
+                                                backgroundColor: 'primary.main',
                                                 textTransform: "none",
                                                 boxShadow: "0px 4px 10px rgba(0,0,0,0.3)",
                                                 "&:hover": {

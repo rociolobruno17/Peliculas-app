@@ -83,141 +83,121 @@ export default function DetailMovie() {
   };
 
   return (
+<Box
+  sx={{
+    position: "relative",
+    minHeight: "100vh",
+    backgroundImage: `url(https://image.tmdb.org/t/p/original${movieDetail.backdrop_path})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    color: "#fff",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center", // centrado vertical
+    "&::before": {
+      content: '""',
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      // Degradé de negro a transparente de izquierda a derecha
+      background: "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)",
+      zIndex: 0
+    }
+  }}
+>
+  <motion.div
+    initial={{ opacity: 0, y: 40 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6, ease: "easeOut" }}
+    style={{ zIndex: 1, width: "100%" }}
+  >
     <Box
       sx={{
-        position: "relative",
-        minHeight: "100vh",
-        backgroundImage: `url(https://image.tmdb.org/t/p/original${movieDetail.backdrop_path})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        color: "#fff",
-        "&::before": {
-          content: '""',
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          backgroundColor: "rgba(0,0,0,0.8)",
-          zIndex: 0
-        }
+        display: "flex",
+        flexDirection: { xs: "column", md: "row" },
+        justifyContent: "center",
+        alignItems: "center", // centrado vertical y horizontal
+        px: { xs: 2, md: 12 },
+        py: { xs: 4, md: 12 }
       }}
     >
+      {/* Poster */}
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
       >
-        <Box
-          sx={{
-            position: "relative",
-            zIndex: 1,
-            display: "flex",
-            flexDirection: { xs: "column", md: "row" },
-            gap: 2,
-            p: { xs: 8, md: 24 }
-          }}
-        >
-          {/* Poster */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <Box sx={{ flexShrink: 0, maxWidth: "300px" }}>
-              <img
-                src={`https://image.tmdb.org/t/p/w500${movieDetail.poster_path}`}
-                alt={movieDetail.title}
-                style={{
-                  borderRadius: 12,
-                  width: "100%",
-                  boxShadow: "0px 4px 30px rgba(0,0,0,0.6)"
-                }}
-              />
-            </Box>
-          </motion.div>
-
-          {/* Info */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            style={{ flex: 1 }}
-          >
-            <Typography
-              variant="h3"
-              sx={{
-                mb: 2,
-                fontWeight: 700,
-                lineHeight: 1.2,
-                textShadow: "2px 2px 8px rgba(0,0,0,0.2)"
-              }}
-            >
-              {movieDetail.title}
-            </Typography>
-
-            <Typography
-              variant="body1"
-              sx={{
-                mb: 3,
-                lineHeight: 1.6,
-                maxWidth: "800px",
-                color: "rgba(255,255,255,0.9)"
-              }}
-            >
-              {movieDetail.overview}
-            </Typography>
-
-            <Typography variant="body2" sx={{ mb: 1, opacity: 0.9 }}>
-              ⭐ {movieDetail.vote_average} — 🎬 {movieDetail.release_date}
-            </Typography>
-
-            {trailer && (
-              <>
-                <Button
-                  variant="contained"
-                  color="primary" // 👈 usa el color del theme
-                  onClick={handleShowTrailer}
-                  sx={{
-                    mt: 2,
-                    borderRadius: "20px",
-                    px: 3,
-                    py: 1.2,
-                    fontSize: "1rem",
-                    textTransform: "none",
-                    fontWeight: "bold"
-                  }}
-                >
-                  ▶ Ver Tráiler
-                </Button>
-
-                {showTrailer && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.4 }}
-                  >
-                    <Box sx={{ mt: 3, maxWidth: "800px" }}>
-                      <iframe
-                        width="100%"
-                        height="450"
-                        src={`https://www.youtube.com/embed/${trailer.key}`}
-                        title="YouTube video player"
-                        frameBorder="0"
-                        allowFullScreen
-                        style={{
-                          borderRadius: "12px",
-                          boxShadow: "0px 4px 30px rgba(0,0,0,0.4)"
-                        }}
-                      />
-                    </Box>
-                  </motion.div>
-                )}
-              </>
-            )}
-          </motion.div>
+        <Box sx={{ flexShrink: 0, maxWidth: "300px", mt: 8 }}>
+          <img
+            src={`https://image.tmdb.org/t/p/w500${movieDetail.poster_path}`}
+            alt={movieDetail.title}
+            style={{
+              borderRadius: 12,
+              width: "80%",
+              boxShadow: "0px 4px 30px rgba(0,0,0,0.6)"
+            }}
+          />
         </Box>
       </motion.div>
+
+      {/* Info */}
+      <motion.div
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        style={{ maxWidth: "600px", textAlign: { xs: "center", md: "left" } }}
+      >
+        <Typography
+          variant="h3"
+          sx={{
+            mb: 2,
+            fontWeight: 700,
+            lineHeight: 1.2,
+            textShadow: "2px 2px 8px rgba(0,0,0,0.2)"
+          }}
+        >
+          {movieDetail.title}
+        </Typography>
+
+        <Typography
+          variant="body1"
+          sx={{
+            mb: 3,
+            lineHeight: 1.6,
+            color: "rgba(255,255,255,0.9)"
+          }}
+        >
+          {movieDetail.overview}
+        </Typography>
+
+        <Typography variant="body2" sx={{ mb: 2, opacity: 0.9 }}>
+          ⭐ {movieDetail.vote_average} — 🎬 {movieDetail.release_date}
+        </Typography>
+
+        {trailer && (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleShowTrailer}
+            sx={{
+              mt: 2,
+              borderRadius: "20px",
+              px: 3,
+              py: 1.2,
+              fontSize: "1rem",
+              textTransform: "none",
+              fontWeight: "bold"
+            }}
+          >
+            Ver Tráiler
+          </Button>
+        )}
+      </motion.div>
     </Box>
+  </motion.div>
+</Box>
+
   );
 }

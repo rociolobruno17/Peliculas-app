@@ -75,32 +75,50 @@ export default function Home() {
         subtitulo="¿Qué se estrena esta semana?"
       />
 
-      <section>
-        <Typography variant="h6" gutterBottom mt={2} ml={4}>
-         Películas Mejor Puntuadas
-        </Typography>
+<section>
+  <Typography variant="h6" gutterBottom mt={2} ml={4}>
+    Películas Mejor Puntuadas
+  </Typography>
 
-        <Carousel
-          responsive={responsiveCards}
-          infinite={false}
-          arrows
-          draggable
-          swipeable
-          keyBoardControl
-          itemClass="carousel-item-padding-40-px"
-          containerClass="carousel-container"
+  <Carousel
+    responsive={responsiveCards}
+    infinite={false}
+    arrows
+    draggable
+    swipeable
+    keyBoardControl
+    itemClass="carousel-item-padding-40-px"
+    containerClass="carousel-container"
+  >
+    {topRatedMovies.slice(0, 10).map((movie, index) => (
+      <Box key={movie.id} sx={{ px: 1, position: "relative" }}>
+        {/* Número de la card */}
+        <Box
+          sx={{
+            position: "absolute",
+            bgcolor: 'primary.main',
+            color: 'primary.contrastText',
+            fontWeight: "bold",
+            px: 1.5,
+            py: 0.5,
+            borderRadius: "4px",
+            zIndex: 10,
+            fontSize: 30,
+          }}
         >
-          {topRatedMovies.slice(0, 10).map((movie) => (
-            <Box key={movie.id} sx={{ px: 1 }}>
-              <MovieCard
-                movie={movie}
-                esFavorito={esFavorito}
-                toggleFavorito={toggleFavorito}
-              />
-            </Box>
-          ))}
-        </Carousel>
-      </section>
+          {index + 1}
+        </Box>
+
+        <MovieCard
+          movie={movie}
+          esFavorito={esFavorito}
+          toggleFavorito={toggleFavorito}
+        />
+      </Box>
+    ))}
+  </Carousel>
+</section>
+
 
       {/* 🎬 Películas Populares */}
       <section>
