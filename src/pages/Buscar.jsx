@@ -1,3 +1,4 @@
+// src/pages/Buscar.jsx
 import { useState, useEffect, useContext } from "react";
 import { useSearchMovies } from "../hooks/useSearchMovies";
 import { useNavigate } from "react-router-dom";
@@ -7,15 +8,16 @@ import {
   Typography,
   TextField,
   Card,
-  CardContent,
   CardMedia,
-  IconButton
+  IconButton,
+  CircularProgress
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { FavoriteContext } from "../context/FavoriteContext";
 import Error404 from "../components/Error404";
 import Logo3d from "../assets/Logo3d.png";
+import Peli from "../assets/Peli.png";
 
 
 function Buscar() {
@@ -24,45 +26,84 @@ function Buscar() {
   const { toggleFavorito, esFavorito } = useContext(FavoriteContext);
   const navigate = useNavigate();
 
-  // Aquí controlamos cuándo buscar
+  // controlamos la búsqueda
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
       searchMovies(query);
-    });
-
+    }, 300); // pequeño delay para debounce
     return () => clearTimeout(delayDebounce);
   }, [query]);
+
+  const showHero = query.trim() === "";
 
   return (
     <Box sx={{ padding: 4, pt: 12 }}>
       <Typography variant="h5" gutterBottom>
-        Buscar Películas
+        Buscar
       </Typography>
 
       <TextField
         fullWidth
-        label="Buscar por título, colección, tema..."
+        label="Por título, colección, tema..."
         variant="outlined"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         sx={{ mb: 4 }}
       />
 
-      <Grid container spacing={3} justifyContent={"center"} >
-        {loading ? (
-          <Typography variant="h6" align="center" mt={4} sx={{ width: "100%" }}>
-            Buscando películas...
+      {/* Hero con logo + frase */}
+      {showHero && (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            mb: 4,
+            textAlign: "center",
+          }}
+        >
+          <Box
+            component="img"
+            src={Peli}
+            alt="Logo 3D"
+            sx={{
+              width: { xs: "150px", sm: "200px", md: "250px" },
+              mb: 0,
+            }}
+          />
+          <Typography variant="h6" color="text.primary">
+            ¿Qué tenés ganas de ver hoy?
           </Typography>
+        </Box>
+      )}
+
+      <Grid container spacing={3} justifyContent={"center"}>
+        {loading ? (
+          <Box
+            sx={{
+              height: "70vh", // ocupa espacio como si fuera el hero
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              bgcolor: "black", // 👈 para que quede igual al splash
+            }}
+          >
+            <CircularProgress
+              size={60}
+              thickness={4}
+              sx={{ color: 'primary.main' }} // 👈 usa el color principal del theme
+            />
+          </Box>
         ) : error ? (
           <Typography variant="h6" align="center" color="error" mt={4} sx={{ width: "100%" }}>
             {error}
           </Typography>
-
         ) : results.length === 0 && query.trim() ? (
           <Error404
             fullScreen={false}
-            title="No encontramos esa película"
-            message={`No encontramos la película “${query}”, ¿probamos con otra? o explorá lo popular.`}
+            title={`No encontramos la película “${query}”.`}
+            message={`¿probamos con otra? o explorá lo más popular.`}
             image={Logo3d}
             imageSx={{ width: 220 }}
             primaryAction={{
@@ -74,11 +115,9 @@ function Buscar() {
               onClick: () => setQuery(""),
             }}
           />
-
         ) : (
-
           results.map((movie) => (
-            <Grid item xs={12} sm={6} md={3} key={movie.id} >
+            <Grid item xs={12} sm={6} md={3} key={movie.id}>
               <Card
                 onClick={() => navigate(`/detail/${movie.id}`)}
                 sx={{
@@ -86,9 +125,7 @@ function Buscar() {
                   position: "relative",
                   overflow: "hidden",
                   transition: "transform 0.3s ease-in-out",
-                  '&:hover': {
-                    transform: "scale(1.05)",
-                  }
+                  "&:hover": { transform: "scale(1.05)" },
                 }}
               >
                 <CardMedia
@@ -115,9 +152,7 @@ function Buscar() {
                     flexDirection: "column",
                     justifyContent: "flex-end",
                     padding: 2,
-                    "&:hover": {
-                      opacity: 8,
-                    },
+                    "&:hover": { opacity: 0.8 },
                   }}
                 >
                   <Typography variant="h6" sx={{ fontWeight: "bold" }}>
@@ -138,7 +173,6 @@ function Buscar() {
                     {movie.overview || "Sin descripción disponible."}
                   </Typography>
 
-
                   <Box sx={{ position: "absolute", top: 8, right: 8 }}>
                     <IconButton
                       onClick={(e) => {
@@ -148,14 +182,16 @@ function Buscar() {
                           title: movie.title,
                           image: movie.poster_path
                             ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                            : "https://via.placeholder.com/500x750?text=Sin+Imagen"
+                            : "https://via.placeholder.com/500x750?text=Sin+Imagen",
                         });
                       }}
                       aria-label="Agregar a favoritos"
                     >
-                      {esFavorito(movie.id)
-                        ? <FavoriteIcon color="error" />
-                        : <FavoriteBorderIcon sx={{ color: "white" }} />}
+                      {esFavorito(movie.id) ? (
+                        <FavoriteIcon color="error" />
+                      ) : (
+                        <FavoriteBorderIcon sx={{ color: "white" }} />
+                      )}
                     </IconButton>
                   </Box>
                 </Box>

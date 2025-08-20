@@ -3,6 +3,8 @@ import { FavoriteContext } from "../context/FavoriteContext";
 import { Grid, Typography, Card, CardMedia, IconButton, Box } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useNavigate } from "react-router-dom";
+import Favorito from "../assets/Favorito.png";
+
 
 function Favorites() {
   const { favoritos, toggleFavorito } = useContext(FavoriteContext);
@@ -11,9 +13,29 @@ function Favorites() {
   return (
     <Box sx={{ padding: 4, pt: 12 }}>
       {favoritos.length === 0 ? (
-        <Typography variant="body1" sx={{ textAlign: "center" }}>
-          Aún no agregaste películas a tu lista de favoritos
-        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            textAlign: "center",
+            mt: 4,
+          }}
+        >
+          <Box
+            component="img"
+            src={Favorito}
+            alt="Favorito 3D"
+            sx={{
+              width: { xs: "150px", sm: "200px", md: "250px" },
+              mb: 2,
+            }}
+          />
+          <Typography variant="h6" color="text.primary">
+            Aún no agregaste nada a tu lista de Favoritos
+          </Typography>
+        </Box>
       ) : (
         <Grid container spacing={2} justifyContent="center" sx={{ px: 2 }}>
           {favoritos.map((movie) => (
@@ -35,7 +57,6 @@ function Favorites() {
                   sx={{ height: 350, objectFit: "cover" }}
                 />
 
-                {/* Overlay con fade */}
                 <Box
                   sx={{
                     position: "absolute",
@@ -73,7 +94,7 @@ function Favorites() {
                     <IconButton
                       onClick={(e) => {
                         e.stopPropagation();
-                        toggleFavorito(movie); // ahora pasamos el objeto completo
+                        toggleFavorito(movie);
                       }}
                       aria-label="Quitar de favoritos"
                     >
@@ -84,13 +105,10 @@ function Favorites() {
               </Card>
             </Grid>
           ))}
-
         </Grid>
-      )
-      }
-    </Box >
+      )}
+    </Box>
   );
 }
 
 export default Favorites;
-
