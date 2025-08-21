@@ -33,7 +33,7 @@ export default function SplashScreen() {
       }}
     >
       <motion.img
-        src={isMobile ? Logo3d : Logo}   // ✅ cambia según pantalla
+        src={isMobile ? Logo3d : Logo}   // cambia según pantalla
         alt="Fílmico"
         style={{ width: isMobile ? 150 : 250, height: "auto" }}
         initial={{ scale: 0.5, opacity: 0 }}

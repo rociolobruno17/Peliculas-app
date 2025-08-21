@@ -1,4 +1,3 @@
-// src/hooks/useMovies.js
 import { useState } from 'react';
 import api from '../api/Tmdb';
 

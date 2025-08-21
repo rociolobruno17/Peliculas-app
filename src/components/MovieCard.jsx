@@ -1,5 +1,3 @@
-// src/components/MovieCard.jsx
-
 import { Card, CardMedia, Box, Typography, IconButton } from "@mui/material";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';

@@ -1,4 +1,3 @@
-// src/components/Layout.jsx
 import { Box } from "@mui/material";
 import Footer from "./Footer";
 import Header from "./Header";

@@ -5,12 +5,12 @@ export default function Error404({
   eyebrow = "ERROR 404",
   title = "Ups, algo pasó...",
   message = "Intentá nuevamente o volvé al inicio.",
-  image = Logo3d, // ✅ por defecto usa Logo3d
+  image = Logo3d, // por defecto usa Logo3d
   primaryAction,
   secondaryAction,
   fullScreen = true,
   sx = {},
-  imageSx = {}, // ✅ ahora es un objeto vacío
+  imageSx = {}, // ahora es un objeto vacío
 }) {
   return (
     <Box
@@ -27,7 +27,7 @@ export default function Error404({
         borderRadius: fullScreen ? 0 : 2,
         px: 2,
         py: fullScreen ? 0 : 6,
-            margin: "0 auto",   // ✅ centra dentro de su contenedor padre
+            margin: "0 auto",   // centra dentro de su contenedor padre
         ...sx,
       }}
     >
@@ -56,7 +56,7 @@ export default function Error404({
       {image && (
         <Box
           component="img"
-          src={image} // ✅ ahora usa la prop
+          src={image} // ahora usa la prop
           alt={title}
           sx={{ width: 300, maxWidth: "80vw", zIndex: 1, ...imageSx }}
         />

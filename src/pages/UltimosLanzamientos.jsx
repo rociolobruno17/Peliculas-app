@@ -1,9 +1,8 @@
-// src/pages/UltimosLanzamientos.jsx
 import { useMovie } from "../hooks/useMovie";
 import { useContext, useEffect } from "react";
 import { FavoriteContext } from "../context/FavoriteContext";
 import { Box, Typography, Grid, Stack, Pagination } from "@mui/material";
-import MovieCard from "../components/MovieCard"; // ✅ Importá tu componente card
+import MovieCard from "../components/MovieCard";
 import Hero from "../components/Hero";
 
 export default function UltimosLanzamientos() {

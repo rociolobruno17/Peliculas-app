@@ -1,4 +1,3 @@
-// src/pages/Home.jsx
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useEffect } from "react";
@@ -7,7 +6,7 @@ import Hero from "../components/Hero";
 import MovieCard from "../components/MovieCard";
 import { useContext } from "react";
 import { FavoriteContext } from "../context/FavoriteContext";
-import { useMovie } from "../hooks/useMovie"; // ✅ nuevo hook unificado
+import { useMovie } from "../hooks/useMovie"; // nuevo hook unificado
 import {
   Box,
   Typography,
@@ -18,7 +17,7 @@ export default function Home() {
   const navigate = useNavigate();
   const { toggleFavorito, esFavorito } = useContext(FavoriteContext);
 
-  // 👉 Usamos el mismo hook con diferentes instancias
+  // Usamos el mismo hook con diferentes instancias
 
   const {
     movies: trendingMovies,
@@ -37,7 +36,7 @@ export default function Home() {
     fetchMovies: fetchPopular
   } = useMovie();
 
-  // 🔄 Fetchs individuales por tipo
+  // Fetchs individuales por tipo
   useEffect(() => {
     fetchTrending("now_playing");
     fetchTopRated("top_rated");
@@ -69,7 +68,7 @@ export default function Home() {
 
   return (
     <Box sx={{ padding: 0 }}>
-      {/* 🔥 Películas en Tendencia */}
+      {/* Películas en Tendencia */}
       <Hero movies={trendingMovies}
         loading={loading}
         subtitulo="¿Qué se estrena esta semana?"
@@ -92,6 +91,7 @@ export default function Home() {
   >
     {topRatedMovies.slice(0, 10).map((movie, index) => (
       <Box key={movie.id} sx={{ px: 1, position: "relative" }}>
+
         {/* Número de la card */}
         <Box
           sx={{
@@ -120,7 +120,7 @@ export default function Home() {
 </section>
 
 
-      {/* 🎬 Películas Populares */}
+      {/* Películas Populares */}
       <section>
         <Typography variant="h6" gutterBottom mt={6} ml={4}>
         Películas Populares

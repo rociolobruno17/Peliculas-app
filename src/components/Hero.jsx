@@ -1,4 +1,3 @@
-// src/components/Hero.jsx
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { Box, Typography, Button, CircularProgress } from "@mui/material";
@@ -26,13 +25,13 @@ export default function Hero({ movies = [], loading, subtitulo = "" }) {
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
-                            bgcolor: "black", // 👈 para que quede igual al splash
+                            bgcolor: "black", 
                         }}
                     >
                         <CircularProgress
                             size={60}
                             thickness={4}
-                            sx={{ color: 'primary.main' }} // 👈 usa el color principal del theme
+                            sx={{ color: 'primary.main' }} 
                         />
                     </Box>
                 ) : (
@@ -55,9 +54,9 @@ export default function Hero({ movies = [], loading, subtitulo = "" }) {
                                     position: "relative",
                                     width: "100vw",
                                     height: {
-                                        xs: "70vh",   // 🔽 Mobile: más corto
-                                        sm: "80vh",   // 🔽 Tablets
-                                        md: "80vh",  // 🔽 Desktop
+                                        xs: "70vh",   // Mobile
+                                        sm: "80vh",   // Tablets
+                                        md: "80vh",  //  Desktop
                                     },
                                     overflow: "hidden",
                                     cursor: "pointer",
@@ -71,11 +70,11 @@ export default function Hero({ movies = [], loading, subtitulo = "" }) {
                                         width: "100%",
                                         height: "100%",
                                         objectFit: "cover",
-                                        objectPosition: "center center", // 👈 Asegura que siempre esté centrada
+                                        objectPosition: "center center", 
                                     }}
                                 />
 
-                                {/* 🔽 Degradado y texto */}
+                                {/* Degradado y texto */}
                                 <Box
                                     sx={{
                                         position: "absolute",
@@ -93,7 +92,7 @@ export default function Hero({ movies = [], loading, subtitulo = "" }) {
                                     }}
                                 >
 
-                                    {/* 🆕 Subtítulo personalizado */}
+                                    {/* Subtítulo personalizado */}
                                     {subtitulo && (
                                         <Typography
                                             variant="h6"

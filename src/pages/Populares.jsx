@@ -1,4 +1,3 @@
-// src/pages/Populares.jsx
 import { useNavigate } from "react-router";
 import { useMovie } from "../hooks/useMovie";
 import { useContext, useEffect } from "react";
@@ -10,7 +9,7 @@ import {
   Stack,
   Pagination
 } from "@mui/material";
-import MovieCard from "../components/MovieCard"; // 👉 Importamos tu componente nuevo
+import MovieCard from "../components/MovieCard"; 
 import Hero from "../components/Hero";
 
 export default function Populares() {

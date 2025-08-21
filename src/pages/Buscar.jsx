@@ -1,4 +1,3 @@
-// src/pages/Buscar.jsx
 import { useState, useEffect, useContext } from "react";
 import { useSearchMovies } from "../hooks/useSearchMovies";
 import { useNavigate } from "react-router-dom";
@@ -82,17 +81,17 @@ function Buscar() {
         {loading ? (
           <Box
             sx={{
-              height: "70vh", // ocupa espacio como si fuera el hero
+              height: "70vh", 
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              bgcolor: "black", // 👈 para que quede igual al splash
+              bgcolor: "black", // 
             }}
           >
             <CircularProgress
               size={60}
               thickness={4}
-              sx={{ color: 'primary.main' }} // 👈 usa el color principal del theme
+              sx={{ color: 'primary.main' }} 
             />
           </Box>
         ) : error ? (

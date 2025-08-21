@@ -33,17 +33,17 @@ export default function DetailMovie() {
     return (
       <Box
         sx={{
-          height: "70vh", // ocupa espacio como si fuera el hero
+          height: "70vh", 
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          bgcolor: "black", // 👈 para que quede igual al splash
+          bgcolor: "black",
         }}
       >
         <CircularProgress
           size={60}
           thickness={4}
-          sx={{ color: 'primary.main' }} // 👈 usa el color principal del theme
+          sx={{ color: 'primary.main' }}
         />
       </Box>
     );
@@ -74,7 +74,7 @@ export default function DetailMovie() {
       </div>
     `,
       width: "800px",
-      background: "#000", // fondo negro como Stremio
+      background: "#000",
       showConfirmButton: false,
       customClass: {
         popup: "trailer-modal"
@@ -93,7 +93,7 @@ export default function DetailMovie() {
     color: "#fff",
     display: "flex",
     justifyContent: "center",
-    alignItems: "center", // centrado vertical
+    alignItems: "center", 
     "&::before": {
       content: '""',
       position: "absolute",
@@ -118,7 +118,7 @@ export default function DetailMovie() {
         display: "flex",
         flexDirection: { xs: "column", md: "row" },
         justifyContent: "center",
-        alignItems: "center", // centrado vertical y horizontal
+        alignItems: "center", 
         px: { xs: 2, md: 12 },
         py: { xs: 4, md: 12 }
       }}
