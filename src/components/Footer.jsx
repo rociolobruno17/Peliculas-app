@@ -12,7 +12,7 @@ export default function Footer() {
         color: "#B0B0B0",
         textAlign: "center",
         py: 8,
-        mt: 0,
+        mt: 8,
         borderTop: "1px solid rgba(255, 255, 255, 0.1)",
       }}
     >
